@@ -33,7 +33,6 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:16px;max-width:860px;margin:0 auto}
 
-/* HEADER */
 .header{
   text-align:center;padding:28px 20px;margin-bottom:24px;
   background:linear-gradient(145deg,rgba(59,130,246,.06),rgba(34,197,94,.04));
@@ -52,7 +51,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 }
 .header p{color:var(--text2);font-size:13px}
 
-/* TABS */
 .tabs{
   display:flex;gap:3px;margin-bottom:20px;
   background:var(--card);border:1px solid var(--border);
@@ -68,7 +66,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .tab.active{background:var(--blue);color:#fff;box-shadow:0 2px 12px rgba(59,130,246,.3)}
 .tab-content{display:none}.tab-content.active{display:block}
 
-/* FORM */
 .form-row{
   display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:20px;
 }
@@ -77,6 +74,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   background:var(--card);border:1px solid var(--border);
   border-radius:var(--radius-sm);padding:14px;
 }
+.field.error{border-color:var(--red);background:rgba(239,68,68,.04)}
 .field label{
   display:block;font-size:10px;font-weight:700;
   text-transform:uppercase;letter-spacing:.8px;
@@ -91,9 +89,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .field input:focus,.field select:focus{
   border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-g);
 }
+.field input.input-error{border-color:var(--red);box-shadow:0 0 0 3px var(--red-g)}
 .field input::placeholder{color:var(--text3)}
+.field-error-msg{
+  display:none;font-size:11px;color:var(--red);font-weight:600;
+  margin-top:6px;padding:6px 10px;
+  background:var(--red-g);border-radius:6px;
+  animation:shakeX .4s ease;
+}
+.field-error-msg.show{display:block}
 
-/* KPI CARDS */
+@keyframes shakeX{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-6px)}
+  40%{transform:translateX(6px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
+}
+
 .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
 @media(min-width:600px){.kpis{grid-template-columns:repeat(4,1fr)}}
 .kpi{
@@ -107,7 +120,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .c-blue{color:var(--blue)}.c-green{color:var(--green)}
 .c-amber{color:var(--amber)}.c-purple{color:var(--purple)}.c-red{color:var(--red)}
 
-/* MSG BOX */
 .section{
   background:var(--card);border:1px solid var(--border);
   border-radius:var(--radius);padding:20px;margin-bottom:20px;
@@ -125,6 +137,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   min-height:60px;
 }
 .msg:hover{border-color:var(--green)}
+.msg.disabled{opacity:.4;pointer-events:none}
 .copy-badge{
   position:absolute;top:10px;right:10px;
   background:rgba(34,197,94,.12);color:var(--green);
@@ -134,17 +147,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 }
 .copied .copy-badge{background:var(--green);color:#fff}
 
-/* BOLETO SUMMARY */
-.bol-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
-@media(min-width:500px){.bol-grid{grid-template-columns:repeat(4,1fr)}}
-.bol-item{
-  background:var(--bg2);border:1px solid var(--border);
-  border-radius:8px;padding:12px;text-align:center;
-}
-.bol-item .bl{font-size:9px;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);font-weight:700;margin-bottom:4px}
-.bol-item .bv{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700}
-
-/* DESCONTO TABLE */
 .desc-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:12px;font-size:12px}
 .desc-table th{
   padding:8px 10px;font-size:9px;text-transform:uppercase;
@@ -160,6 +162,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .desc-table .sel td{background:var(--blue-g);font-weight:700}
 
 .footer{text-align:center;padding:20px;color:var(--text3);font-size:11px}
+
+.error-banner{
+  display:none;padding:14px 18px;margin-bottom:20px;
+  background:var(--red-g);border:1px solid rgba(239,68,68,.3);
+  border-radius:var(--radius-sm);color:var(--red);
+  font-weight:600;font-size:13px;
+  animation:shakeX .4s ease;
+}
+.error-banner.show{display:flex;align-items:center;gap:8px}
 </style>
 </head>
 <body>
@@ -174,7 +185,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <button class="tab" onclick="switchTab('boleto',this)">📑 Boleto</button>
 </div>
 
-<!-- ═══════════ ABA CARTÃO / PIX ═══════════ -->
+<!-- ABA CARTAO / PIX -->
 <div id="tab-cartao" class="tab-content active">
   <div class="form-row">
     <div class="field">
@@ -197,7 +208,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 </div>
 
-<!-- ═══════════ ABA BOLETO ═══════════ -->
+<!-- ABA BOLETO -->
 <div id="tab-boleto" class="tab-content">
   <div class="form-row">
     <div class="field">
@@ -211,13 +222,26 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
   <div class="form-row">
     <div class="field">
-      <label>🔢 Quantas Vezes (1-10)</label>
-      <input type="number" id="b_parcelas" value="7" min="1" max="10" oninput="calcBoleto()">
+      <label>🔢 Quantas Vezes (1 a 7)</label>
+      <select id="b_parcelas" onchange="calcBoleto()">
+        <option value="1">1x (à vista boleto)</option>
+        <option value="2">2x</option>
+        <option value="3">3x</option>
+        <option value="4">4x</option>
+        <option value="5">5x</option>
+        <option value="6">6x</option>
+        <option value="7" selected>7x</option>
+      </select>
     </div>
-    <div class="field">
-      <label>💵 % Entrada</label>
-      <input type="number" id="b_entrada" value="25" min="0" max="100" step="5" oninput="calcBoleto()">
+    <div class="field" id="b_entrada_field">
+      <label>💵 % Entrada (mínimo 25%)</label>
+      <input type="number" id="b_entrada" value="25" min="25" max="100" step="5" oninput="calcBoleto()">
+      <div class="field-error-msg" id="b_entrada_error">⚠️ Entrada mínima é 25%! Ajuste para continuar.</div>
     </div>
+  </div>
+
+  <div class="error-banner" id="boleto_error_banner">
+    🚫 Entrada abaixo de 25% não é permitida. O orçamento não será gerado.
   </div>
 
   <div class="kpis" id="b_kpis"></div>
@@ -238,96 +262,120 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <div class="footer">Peso Certo Comercial — Ferramenta interna de vendas</div>
 
 <script>
-// ===== CONSTANTES =====
-const D12=0.08, D6=0.12, DVista=0.185;
-const DESC_BOL={1:.17,2:.15,3:.14,4:.11,5:.10,6:.09,7:.08,8:.02,9:.0001,10:.00001};
+var D12=0.08, D6=0.12, DVista=0.185;
+var DESC_BOL={1:.17,2:.15,3:.14,4:.11,5:.10,6:.09,7:.08};
+var ENTRADA_MIN=25;
 
-function R$(v){return'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function R$(v){return'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
 
-// ===== CARTÃO / PIX =====
 function calcCartao(){
-  const val=parseFloat(document.getElementById('c_valor').value)||0;
-  const prod=document.getElementById('c_produto').value.trim();
+  var val=parseFloat(document.getElementById('c_valor').value)||0;
+  var prod=document.getElementById('c_produto').value.trim();
 
-  const v12=val*(1-D12), v6=val*(1-D6), vV=val*(1-DVista);
-  const p12=Math.ceil(v12/12), p6=Math.ceil(v6/6);
-  const v21=val, p21=Math.floor(v21/21);
-  const show21=val>=5000;
+  var v12=val*(1-D12), v6=val*(1-D6), vV=val*(1-DVista);
+  var p12=Math.ceil(v12/12), p6=Math.ceil(v6/6);
+  var v21=val, p21=Math.floor(v21/21);
+  var show21=val>=5000;
 
-  document.getElementById('c_kpis').innerHTML=`
-    <div class="kpi"><div class="kpi-label">À Vista</div><div class="kpi-val c-green">${R$(Math.ceil(vV))}</div><div class="kpi-sub">18,5% off</div></div>
-    <div class="kpi"><div class="kpi-label">6x Cartão</div><div class="kpi-val c-blue">${R$(p6)}<span style="font-size:11px;color:var(--text2)">/mês</span></div><div class="kpi-sub">Total: ${R$(p6*6)}</div></div>
-    <div class="kpi"><div class="kpi-label">12x Cartão</div><div class="kpi-val c-amber">${R$(p12)}<span style="font-size:11px;color:var(--text2)">/mês</span></div><div class="kpi-sub">Total: ${R$(p12*12)}</div></div>
-    ${show21?`<div class="kpi"><div class="kpi-label">21x Cartão</div><div class="kpi-val c-purple">${R$(p21)}<span style="font-size:11px;color:var(--text2)">/mês</span></div><div class="kpi-sub">Total: ${R$(p21*21)}</div></div>`
-    :`<div class="kpi"><div class="kpi-label">Economia</div><div class="kpi-val c-green">${R$(val-Math.ceil(vV))}</div><div class="kpi-sub">à vista vs tabela</div></div>`}
-  `;
+  document.getElementById('c_kpis').innerHTML=
+    '<div class="kpi"><div class="kpi-label">À Vista</div><div class="kpi-val c-green">'+R$(Math.ceil(vV))+'</div><div class="kpi-sub">18,5% off</div></div>'+
+    '<div class="kpi"><div class="kpi-label">6x Cartão</div><div class="kpi-val c-blue">'+R$(p6)+'<span style="font-size:11px;color:var(--text2)">/mês</span></div><div class="kpi-sub">Total: '+R$(p6*6)+'</div></div>'+
+    '<div class="kpi"><div class="kpi-label">12x Cartão</div><div class="kpi-val c-amber">'+R$(p12)+'<span style="font-size:11px;color:var(--text2)">/mês</span></div><div class="kpi-sub">Total: '+R$(p12*12)+'</div></div>'+
+    (show21?'<div class="kpi"><div class="kpi-label">21x Cartão</div><div class="kpi-val c-purple">'+R$(p21)+'<span style="font-size:11px;color:var(--text2)">/mês</span></div><div class="kpi-sub">Total: '+R$(p21*21)+'</div></div>'
+    :'<div class="kpi"><div class="kpi-label">Economia</div><div class="kpi-val c-green">'+R$(val-Math.ceil(vV))+'</div><div class="kpi-sub">à vista vs tabela</div></div>');
 
-  const nomeProd = prod ? `\n*Produto:* ${prod}\n` : '\n*Produto:*\n';
-  let msg;
+  var nomeProd = prod ? '\n*Produto:* '+prod+'\n' : '\n*Produto:*\n';
+  var msg;
   if(show21){
-    msg=`*Segue o orçamento:*\n${nomeProd}\n 💰 *Valor de tabela:* ~${R$(val)}~\n\n🚀 *Promoção Hoje* ✅\n\n* *À vista:* ${R$(Math.ceil(vV))}\n* *6x:* ${R$(p6)}  (Total: ${R$(p6*6)})\n* *12x:* ${R$(p12)}  (Total: ${R$(p12*12)})\n* *21x:* ${R$(p21)}  (Total: ${R$(p21*21)})\n\n👉  *Pronta entrega*\n👉  *Frete grátis*`;
+    msg='*Segue o orçamento:*\n'+nomeProd+'\n 💰 *Valor de tabela:* ~'+R$(val)+'~\n\n🚀 *Promoção Hoje* ✅\n\n* *À vista:* '+R$(Math.ceil(vV))+'\n* *6x:* '+R$(p6)+'  (Total: '+R$(p6*6)+')\n* *12x:* '+R$(p12)+'  (Total: '+R$(p12*12)+')\n* *21x:* '+R$(p21)+'  (Total: '+R$(p21*21)+')\n\n👉  *Pronta entrega*\n👉  *Frete grátis*';
   } else {
-    msg=`*Segue o orçamento:*\n${nomeProd}\n 💰 *Valor de tabela:* ~${R$(val)}~\n\n🚀 *Promoção Hoje* ✅\n\n* *À vista:* ${R$(Math.ceil(vV))}\n* *6x:* ${R$(p6)}  (Total: ${R$(p6*6)})\n* *12x:* ${R$(p12)}  (Total: ${R$(p12*12)})\n\n👉  *Pronta entrega*\n👉  *Frete grátis*`;
+    msg='*Segue o orçamento:*\n'+nomeProd+'\n 💰 *Valor de tabela:* ~'+R$(val)+'~\n\n🚀 *Promoção Hoje* ✅\n\n* *À vista:* '+R$(Math.ceil(vV))+'\n* *6x:* '+R$(p6)+'  (Total: '+R$(p6*6)+')\n* *12x:* '+R$(p12)+'  (Total: '+R$(p12*12)+')\n\n👉  *Pronta entrega*\n👉  *Frete grátis*';
   }
   setMsg('c_msg',msg);
 }
 
-// ===== BOLETO =====
 function calcBoleto(){
-  const val=parseFloat(document.getElementById('b_valor').value)||0;
-  const prod=document.getElementById('b_produto').value.trim();
-  const n=Math.min(10,Math.max(1,parseInt(document.getElementById('b_parcelas').value)||1));
-  const pctE=(parseFloat(document.getElementById('b_entrada').value)||0)/100;
+  var val=parseFloat(document.getElementById('b_valor').value)||0;
+  var prod=document.getElementById('b_produto').value.trim();
+  var n=parseInt(document.getElementById('b_parcelas').value)||1;
+  var pctE=parseFloat(document.getElementById('b_entrada').value);
 
-  const desc=DESC_BOL[n]||0;
-  const descVal=val*desc;
-  const final_=val-descVal;
-  const entrada=Math.floor(val*pctE);
-  const rest=final_-entrada;
-  const nParc=n===1?1:n-1;
-  const parc=rest/nParc;
+  var entradaField=document.getElementById('b_entrada_field');
+  var entradaInput=document.getElementById('b_entrada');
+  var entradaError=document.getElementById('b_entrada_error');
+  var banner=document.getElementById('boleto_error_banner');
+  var msgEl=document.getElementById('b_msg');
 
-  document.getElementById('b_kpis').innerHTML=`
-    <div class="kpi"><div class="kpi-label">Valor Final</div><div class="kpi-val c-blue">${R$(final_)}</div><div class="kpi-sub">-${(desc*100).toFixed(1)}%</div></div>
-    <div class="kpi"><div class="kpi-label">Entrada</div><div class="kpi-val c-green">${R$(entrada)}</div><div class="kpi-sub">${(pctE*100).toFixed(0)}%</div></div>
-    <div class="kpi"><div class="kpi-label">Restante</div><div class="kpi-val c-amber">${R$(rest)}</div></div>
-    <div class="kpi"><div class="kpi-label">${nParc}x de</div><div class="kpi-val c-purple">${R$(Math.round(parc))}</div></div>
-  `;
+  if(pctE < ENTRADA_MIN){
+    entradaField.classList.add('error');
+    entradaInput.classList.add('input-error');
+    entradaError.classList.add('show');
+    banner.classList.add('show');
+    msgEl.classList.add('disabled');
 
-  const nomeProd = prod ? `\n*Produto:* ${prod}\n` : '';
-  const msgB=`*Pagamento no Boleto* 📑\n${nomeProd}\n💰 *Valor:* ~${R$(val)}~\n🏷️ *Desconto:* ${(desc*100).toFixed(1)}%\n✅ *Valor Final:* ${R$(final_)}\n\n📌 *Entrada:* ${R$(entrada)}\n📌 *${nParc} parcela${nParc>1?'s':''} de:* ${R$(Math.round(parc))}\n\n📋 *Resumo:*\n   Entrada: ${R$(entrada)}\n   + ${nParc}x ${R$(Math.round(parc))} = ${R$(Math.round(parc)*nParc)}\n   *Total: ${R$(entrada+Math.round(parc)*nParc)}*\n\n👉 *Pronta entrega*\n👉 *Frete grátis*`;
+    document.getElementById('b_kpis').innerHTML=
+      '<div class="kpi" style="grid-column:1/-1;border-color:rgba(239,68,68,.3)">'+
+      '<div class="kpi-label" style="color:var(--red)">⚠️ Erro de Validação</div>'+
+      '<div class="kpi-val c-red" style="font-size:15px">Entrada mínima é '+ENTRADA_MIN+'%</div>'+
+      '<div class="kpi-sub">Ajuste o percentual de entrada para '+ENTRADA_MIN+'% ou mais para gerar o orçamento.</div>'+
+      '</div>';
+    setMsg('b_msg','⚠️ Ajuste a entrada para no mínimo 25% para gerar o orçamento.');
+    return;
+  }
+
+  entradaField.classList.remove('error');
+  entradaInput.classList.remove('input-error');
+  entradaError.classList.remove('show');
+  banner.classList.remove('show');
+  msgEl.classList.remove('disabled');
+
+  var pctEntrada = pctE / 100;
+  var desc=DESC_BOL[n]||0;
+  var descVal=val*desc;
+  var final_=val-descVal;
+  var entrada=Math.floor(val*pctEntrada);
+  var rest=final_-entrada;
+  var nParc=n===1?1:n-1;
+  var parc=rest/nParc;
+
+  document.getElementById('b_kpis').innerHTML=
+    '<div class="kpi"><div class="kpi-label">Valor Final</div><div class="kpi-val c-blue">'+R$(final_)+'</div><div class="kpi-sub">-'+(desc*100).toFixed(1)+'%</div></div>'+
+    '<div class="kpi"><div class="kpi-label">Entrada</div><div class="kpi-val c-green">'+R$(entrada)+'</div><div class="kpi-sub">'+(pctEntrada*100).toFixed(0)+'%</div></div>'+
+    '<div class="kpi"><div class="kpi-label">Restante</div><div class="kpi-val c-amber">'+R$(rest)+'</div></div>'+
+    '<div class="kpi"><div class="kpi-label">'+nParc+'x de</div><div class="kpi-val c-purple">'+R$(Math.round(parc))+'</div></div>';
+
+  var nomeProd = prod ? '\n*Produto:* '+prod+'\n' : '';
+  var msgB='*Pagamento no Boleto* 📑\n'+nomeProd+'\n💰 *Valor:* ~'+R$(val)+'~\n🏷️ *Desconto:* '+(desc*100).toFixed(1)+'%\n✅ *Valor Final:* '+R$(final_)+'\n\n📌 *Entrada:* '+R$(entrada)+'\n📌 *'+nParc+' parcela'+(nParc>1?'s':'')+' de:* '+R$(Math.round(parc))+'\n\n📋 *Resumo:*\n   Entrada: '+R$(entrada)+'\n   + '+nParc+'x '+R$(Math.round(parc))+' = '+R$(Math.round(parc)*nParc)+'\n   *Total: '+R$(entrada+Math.round(parc)*nParc)+'*\n\n👉 *Pronta entrega*\n👉 *Frete grátis*';
   setMsg('b_msg',msgB);
 
-  // Tabela de descontos
-  let thtml='<thead><tr><th>Parcelas</th><th>Desconto</th><th>Valor Final</th><th>Entrada ('+((pctE*100).toFixed(0))+'%)</th><th>Parcela</th></tr></thead><tbody>';
-  for(let i=1;i<=10;i++){
-    const d=DESC_BOL[i]||0;
-    const vf=val-val*d;
-    const ent=Math.floor(val*pctE);
-    const r=vf-ent;
-    const np=i===1?1:i-1;
-    const p=r/np;
-    const sel=i===n?'sel':'';
-    thtml+=`<tr class="${sel}"><td>${i}x</td><td>${(d*100).toFixed(1)}%</td><td>${R$(vf)}</td><td>${R$(ent)}</td><td>${R$(Math.round(p))}</td></tr>`;
+  var thtml='<thead><tr><th>Parcelas</th><th>Desconto</th><th>Valor Final</th><th>Entrada ('+(pctEntrada*100).toFixed(0)+'%)</th><th>Parcela</th></tr></thead><tbody>';
+  for(var i=1;i<=7;i++){
+    var d=DESC_BOL[i]||0;
+    var vf=val-val*d;
+    var ent=Math.floor(val*pctEntrada);
+    var r=vf-ent;
+    var np=i===1?1:i-1;
+    var p=r/np;
+    var sel=i===n?'sel':'';
+    thtml+='<tr class="'+sel+'"><td>'+i+'x</td><td>'+(d*100).toFixed(1)+'%</td><td>'+R$(vf)+'</td><td>'+R$(ent)+'</td><td>'+R$(Math.round(p))+'</td></tr>';
   }
   thtml+='</tbody>';
   document.getElementById('descTable').innerHTML=thtml;
 }
 
-// ===== UTILS =====
 function setMsg(id,text){
-  const el=document.getElementById(id);
-  // Keep the badge
-  el.innerHTML=`<span class="copy-badge">📋 COPIAR</span>`+text.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  var el=document.getElementById(id);
+  el.innerHTML='<span class="copy-badge">📋 COPIAR</span>'+text.replace(/</g,'&lt;').replace(/>/g,'&gt;');
   el._text=text;
 }
 
 function copyThis(el){
-  const text=el._text||el.textContent;
-  navigator.clipboard.writeText(text).then(()=>{
+  if(el.classList.contains('disabled'))return;
+  var text=el._text||el.textContent;
+  navigator.clipboard.writeText(text).then(function(){
     el.classList.add('copied');
     el.querySelector('.copy-badge').textContent='✅ COPIADO!';
-    setTimeout(()=>{
+    setTimeout(function(){
       el.classList.remove('copied');
       el.querySelector('.copy-badge').textContent='📋 COPIAR';
     },1500);
@@ -335,13 +383,14 @@ function copyThis(el){
 }
 
 function switchTab(name,btn){
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  var tabs=document.querySelectorAll('.tab-content');
+  for(var i=0;i<tabs.length;i++){tabs[i].classList.remove('active');}
+  var btns=document.querySelectorAll('.tab');
+  for(var i=0;i<btns.length;i++){btns[i].classList.remove('active');}
   document.getElementById('tab-'+name).classList.add('active');
   btn.classList.add('active');
 }
 
-// INIT
 calcCartao();
 calcBoleto();
 </script>
