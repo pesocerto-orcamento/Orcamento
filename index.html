@@ -7,7 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0e1a;--bg2:#0f1424;--card:#141a2e;--border:#1c2540;--border-hi:#2a3558;--text:#e8edf5;--text2:#94a3b8;--text3:#5a6a85;--blue:#3b82f6;--blue-g:rgba(59,130,246,.12);--green:#22c55e;--green-g:rgba(34,197,94,.10);--amber:#f59e0b;--purple:#a78bfa;--red:#ef4444;--red-g:rgba(239,68,68,.10);--gold:#f59e0b;--gold-g:rgba(245,158,11,.12);--radius:14px;--radius-sm:10px}
+:root{--bg:#d9e0ea;--bg2:#f1f4f8;--card:#e8edf3;--border:#c5cfdc;--border-hi:#aebbcc;--text:#0f172a;--text2:#3f4d63;--text3:#6b7a90;--blue:#2563eb;--blue-g:rgba(37,99,235,.12);--green:#15803d;--green-g:rgba(21,128,61,.12);--amber:#c26a05;--purple:#6d28d9;--red:#dc2626;--red-g:rgba(220,38,38,.10);--gold:#c26a05;--gold-g:rgba(194,106,5,.12);--radius:14px;--radius-sm:10px}
 .c-gold{color:var(--gold)}
 .tab.active-cons{background:linear-gradient(135deg,#b45309,#f59e0b);color:#fff;box-shadow:0 2px 12px rgba(245,158,11,.4)}
 .cons-badge{display:inline-block;background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(245,158,11,.05));border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--amber);font-weight:600;line-height:1.7;width:100%}
@@ -58,7 +58,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .field-error-msg.show{display:block}
 .tabs{display:flex;gap:3px;margin-bottom:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px}
 .tab{flex:1;padding:10px 6px;border-radius:8px;cursor:pointer;font-weight:700;font-size:12px;color:var(--text2);text-align:center;transition:all .2s;border:none;background:transparent;font-family:inherit}
-.tab:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.tab:hover{color:var(--text);background:rgba(15,23,42,.03)}
 .tab.active{background:var(--blue);color:#fff;box-shadow:0 2px 12px rgba(59,130,246,.3)}
 .tab-content{display:none}.tab-content.active{display:block}
 .form-row{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:16px}
@@ -79,9 +79,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .copy-badge{position:absolute;top:8px;right:8px;background:rgba(34,197,94,.12);color:var(--green);font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;text-transform:uppercase;pointer-events:none}
 .copied .copy-badge{background:var(--green);color:#fff}
 .desc-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:10px;font-size:11px}
-.desc-table th{padding:7px 8px;font-size:9px;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);font-weight:700;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border);text-align:center}
-.desc-table td{padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.03);font-family:'JetBrains Mono',monospace;text-align:center;font-size:11px}
-.desc-table tr:hover td{background:rgba(255,255,255,.02)}
+.desc-table th{padding:7px 8px;font-size:9px;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);font-weight:700;background:rgba(15,23,42,.02);border-bottom:1px solid var(--border);text-align:center}
+.desc-table td{padding:6px 8px;border-bottom:1px solid rgba(15,23,42,.03);font-family:'JetBrains Mono',monospace;text-align:center;font-size:11px}
+.desc-table tr:hover td{background:rgba(15,23,42,.02)}
 .desc-table .sel td{background:var(--blue-g);font-weight:700}
 .desc-table .td-price{font-size:10px;line-height:1.5}
 .desc-table .td-total{font-size:9px;color:var(--text3);display:block}
@@ -208,7 +208,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 /* ABAS INTERNAS DO ADMIN */
 .admin-tabs{display:flex;gap:3px;margin-bottom:16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:3px}
 .admin-tab{flex:1;padding:8px 6px;border-radius:6px;cursor:pointer;font-weight:700;font-size:11px;color:var(--text2);text-align:center;transition:all .2s;border:none;background:transparent;font-family:inherit}
-.admin-tab:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.admin-tab:hover{color:var(--text);background:rgba(15,23,42,.03)}
 .admin-tab.active{background:linear-gradient(135deg,#b45309,#f59e0b);color:#fff;box-shadow:0 2px 8px rgba(245,158,11,.3)}
 .admin-tab-content{display:none}.admin-tab-content.active{display:block}
 /* DRE */
@@ -234,10 +234,60 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .desc-table .sel-badge{display:inline-block;background:rgba(34,197,94,.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;vertical-align:middle}
 /* PRINT: boleto mostra só linha selecionada na tabela de descontos */
 @media print{
-  #descTable tr:not(.sel){display:none!important}
+  #descTable tbody tr:not(.sel){display:none!important}
+  #b_tabela_nota{display:none!important}
   #descTable tr.sel td{background:#e8f4ed!important;font-weight:700!important}
   .admin-lock,.admin-overlay{display:none!important}
 }
+
+.cond-opts{display:flex;gap:6px;flex-wrap:wrap}
+.cond-opt{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;color:var(--text3);cursor:pointer;transition:all .2s;font-family:inherit;text-decoration:line-through}
+.cond-opt:hover{border-color:var(--green)}
+.cond-opt.sel{background:var(--green-g);border-color:var(--green);color:var(--green);text-decoration:none}
+.cond-opt.sel::before{content:'✓ '}
+.cond-opt.off{opacity:.35;cursor:not-allowed}
+.cond-hint{font-size:10px;color:var(--text3);margin-top:8px}
+
+/* opções frete/entrega */
+.opt-groups{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-bottom:14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px}
+.opt-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.opt-group-label{font-size:11px;font-weight:700;color:var(--text2)}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:3px;gap:2px}
+.seg-opt{background:transparent;border:none;border-radius:6px;padding:6px 11px;font-size:11px;font-weight:700;color:var(--text3);cursor:pointer;font-family:inherit;transition:all .2s}
+.seg-opt:hover{color:var(--text)}
+.seg-opt.sel{background:var(--green-g);color:var(--green);box-shadow:inset 0 0 0 1px var(--green)}
+.seg-opt.sel[data-v=""]{background:rgba(148,163,184,.12);color:var(--text2);box-shadow:inset 0 0 0 1px var(--text3)}
+.print-cond-title{display:none}
+@media print{
+  @page{margin:12mm}
+  *{transition:none!important;animation:none!important}
+  body{padding:0!important}
+  .img-section.vazio{display:none!important}
+  .print-frete-info.vazio{display:none!important}
+  .print-frete-info{display:flex!important;gap:24px;flex-wrap:wrap;margin-top:10px!important}
+  .print-cond-title{display:block!important;font-size:12px;font-weight:800;color:#1a2744;margin:4px 0 8px}
+  .kpis{display:flex!important;flex-wrap:wrap;justify-content:flex-start;gap:8px!important;grid-template-columns:none!important}
+  .kpi{flex:1 1 0;min-width:0;max-width:240px;background:#f8faff!important;border:1px solid #dde4f0!important;border-radius:8px!important;box-shadow:none!important;transform:none!important}
+  .kpis[data-n="1"] .kpi{max-width:320px;border:2px solid #6DB6D9!important}
+  .kpis[data-n="1"] .kpi-val{font-size:20px!important}
+  .kpi-val span{color:#666!important}
+  .desc-table{font-size:11px!important}
+  .desc-table td,.desc-table th{padding:7px 10px!important}
+  .desc-table td:first-child,.desc-table th:first-child{text-align:left!important}
+  .sel-badge{display:none!important}
+  .section,.kpis,.print-header{page-break-inside:avoid}
+}
+
+/* tema claro */
+.section,.kpi,.field,.tabs,.header{box-shadow:0 1px 3px rgba(15,23,42,.06)}
+.header{background:linear-gradient(160deg,rgba(109,182,217,.18),rgba(22,163,74,.05)),var(--card)}
+.msg{color:#14532d;background:#f1f6f2;border-color:#b9d4c1}
+.admin-lock{box-shadow:0 2px 12px rgba(15,23,42,.15)}
+.admin-overlay{background:rgba(15,23,42,.45)}
+.admin-modal{background:var(--bg)}
+.dre-kpi,.admin-tabs{background:var(--card)}
+.seg{background:var(--bg2)}
+input::-webkit-inner-spin-button{opacity:.5}
 </style>
 </head>
 <body>
@@ -259,7 +309,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="print-header-empresa">
       <h2>Peso Certo Equipamentos Comerciais</h2>
       <p id="printCnpj">CNPJ: 49.923.839/0002-71</p>
-      <p>Av. Presidente Kennedy, 1860 — Ano Bom, Barra Mansa/RJ</p>
+      <p>Av. Presidente Kennedy, 3172 — Ano Bom, Barra Mansa/RJ</p>
       <p>pesocertoequipamentos.com.br</p>
     </div>
   </div>
@@ -321,7 +371,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <div class="tabs no-print">
   <button class="tab active" onclick="switchTab('cartao',this)">💳 Cartão / PIX</button>
   <button class="tab" onclick="switchTab('boleto',this)">📑 Boleto</button>
-  <button class="tab" onclick="switchTab('consorcio',this)" style="background:linear-gradient(135deg,rgba(180,83,9,.15),rgba(245,158,11,.08));color:var(--amber);border:1px solid rgba(245,158,11,.2)">🤝 Consórcio</button>
 </div>
 
 <!-- ABA CARTAO -->
@@ -334,32 +383,51 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <button class="btn-add" onclick="addProd('c')">+ Adicionar Produto</button>
     </div>
   </div>
+  <div class="section no-print">
+    <div class="section-title">✅ Condições que vão no orçamento</div>
+    <div class="cond-opts" id="c_conds">
+      <button class="cond-opt sel" data-k="v" onclick="toggleCond('v',this)">À vista / PIX</button>
+      <button class="cond-opt sel" data-k="6" onclick="toggleCond('6',this)">6x Cartão</button>
+      <button class="cond-opt sel" data-k="12" onclick="toggleCond('12',this)">12x Cartão</button>
+      <button class="cond-opt sel" data-k="21" onclick="toggleCond('21',this)">21x Cartão</button>
+    </div>
+    <div class="cond-hint" id="c_cond_hint">Clique para ligar/desligar. Vale para os cards, a mensagem do WhatsApp e o impresso.</div>
+  </div>
+  <div class="print-cond-title">💳 Condições de Pagamento</div>
   <div class="kpis" id="c_kpis"></div>
   <div class="section no-print">
     <div class="section-title no-print">📱 Mensagem WhatsApp</div>
-    <div class="frete-toggle">
-      <label>
-        <input type="checkbox" class="frete-chk" id="c_frete" checked onchange="calcCartao()">
-        <span class="frete-label" id="c_frete_label">🚚 Frete Grátis</span>
-      </label>
-      <label style="margin-left:12px">
-        <input type="checkbox" class="frete-chk" id="c_entrega" checked onchange="calcCartao()">
-        <span class="frete-label" id="c_entrega_label">📦 Pronta Entrega</span>
-      </label>
-      <span style="font-size:10px;color:var(--text3)">Aparecem na mensagem WhatsApp</span>
+    <div class="opt-groups">
+      <div class="opt-group">
+        <span class="opt-group-label">🚚 Frete</span>
+        <div class="seg" id="c_frete_opts">
+          <button class="seg-opt sel" data-v="gratis" onclick="setOpt('c','frete','gratis')">Grátis</button>
+          <button class="seg-opt" data-v="combinar" onclick="setOpt('c','frete','combinar')">A combinar</button>
+          <button class="seg-opt" data-v="" onclick="setOpt('c','frete','')">Não incluir</button>
+        </div>
+      </div>
+      <div class="opt-group">
+        <span class="opt-group-label">📦 Entrega</span>
+        <div class="seg" id="c_entrega_opts">
+          <button class="seg-opt sel" data-v="pronta" onclick="setOpt('c','entrega','pronta')">Pronta entrega</button>
+          <button class="seg-opt" data-v="encomenda" onclick="setOpt('c','entrega','encomenda')">Sob encomenda</button>
+          <button class="seg-opt" data-v="" onclick="setOpt('c','entrega','')">Não incluir</button>
+        </div>
+      </div>
+      <div class="cond-hint" style="margin-top:0">Vale para a mensagem do WhatsApp e para o impresso.</div>
     </div>
     <div class="msg" id="c_msg" onclick="copyThis(this)"><span class="copy-badge">📋 COPIAR</span></div>
   </div>
   <div class="section print-section">
     <div class="section-title">📊 Resumo do Orçamento</div>
     <table class="desc-table" id="c_resumo"></table>
+    <div class="print-frete-info" id="c_print_frete"></div>
   </div>
-  <div class="section print-section">
+  <div class="section print-section img-section vazio" id="c_imgSection">
     <div class="section-title">📷 Imagens do Orçamento</div>
     <input type="file" class="img-input" id="c_imgInput" accept="image/*" multiple onchange="addImages('c',this)">
     <div class="actions"><button class="btn-img no-print" onclick="document.getElementById('c_imgInput').click()">📷 Adicionar Fotos</button></div>
     <div class="img-gallery" id="c_gallery"></div>
-    <div class="print-frete-info" id="c_print_frete"></div>
   </div>
   <div class="actions no-print"><button class="btn-print" onclick="window.print()">🖨️ Imprimir Orçamento</button></div>
 </div>
@@ -388,19 +456,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
   </div>
   <div class="error-banner" id="boleto_error_banner">🚫 Entrada abaixo de 25% não é permitida.</div>
+  <div class="print-cond-title">📑 Pagamento no Boleto</div>
   <div class="kpis" id="b_kpis"></div>
   <div class="section no-print">
     <div class="section-title no-print">📱 Mensagem WhatsApp</div>
-    <div class="frete-toggle">
-      <label>
-        <input type="checkbox" class="frete-chk" id="b_frete" checked onchange="calcBoleto()">
-        <span class="frete-label" id="b_frete_label">🚚 Frete Grátis</span>
-      </label>
-      <label style="margin-left:12px">
-        <input type="checkbox" class="frete-chk" id="b_entrega" checked onchange="calcBoleto()">
-        <span class="frete-label" id="b_entrega_label">📦 Pronta Entrega</span>
-      </label>
-      <span style="font-size:10px;color:var(--text3)">Aparecem na mensagem WhatsApp</span>
+    <div class="opt-groups">
+      <div class="opt-group">
+        <span class="opt-group-label">🚚 Frete</span>
+        <div class="seg" id="b_frete_opts">
+          <button class="seg-opt sel" data-v="gratis" onclick="setOpt('b','frete','gratis')">Grátis</button>
+          <button class="seg-opt" data-v="combinar" onclick="setOpt('b','frete','combinar')">A combinar</button>
+          <button class="seg-opt" data-v="" onclick="setOpt('b','frete','')">Não incluir</button>
+        </div>
+      </div>
+      <div class="opt-group">
+        <span class="opt-group-label">📦 Entrega</span>
+        <div class="seg" id="b_entrega_opts">
+          <button class="seg-opt sel" data-v="pronta" onclick="setOpt('b','entrega','pronta')">Pronta entrega</button>
+          <button class="seg-opt" data-v="encomenda" onclick="setOpt('b','entrega','encomenda')">Sob encomenda</button>
+          <button class="seg-opt" data-v="" onclick="setOpt('b','entrega','')">Não incluir</button>
+        </div>
+      </div>
+      <div class="cond-hint" style="margin-top:0">Vale para a mensagem do WhatsApp e para o impresso.</div>
     </div>
     <div class="msg" id="b_msg" onclick="copyThis(this)"><span class="copy-badge">📋 COPIAR</span></div>
   </div>
@@ -412,87 +489,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="section-title">📋 Condições de Pagamento — Boleto</div>
     <table class="desc-table" id="descTable"></table>
     <div id="b_tabela_nota" style="font-size:10px;color:var(--text3);margin-top:8px;font-style:italic"></div>
+    <div class="print-frete-info" id="b_print_frete"></div>
   </div>
-  <div class="section print-section">
+  <div class="section print-section img-section vazio" id="b_imgSection">
     <div class="section-title">📷 Imagens do Orçamento</div>
     <input type="file" class="img-input" id="b_imgInput" accept="image/*" multiple onchange="addImages('b',this)">
     <div class="actions"><button class="btn-img no-print" onclick="document.getElementById('b_imgInput').click()">📷 Adicionar Fotos</button></div>
     <div class="img-gallery" id="b_gallery"></div>
-    <div class="print-frete-info" id="b_print_frete"></div>
-  </div>
-  <div class="actions no-print"><button class="btn-print" onclick="window.print()">🖨️ Imprimir Orçamento</button></div>
-</div>
-
-<!-- ABA CONSÓRCIO -->
-<div id="tab-consorcio" class="tab-content">
-  <div class="cons-badge">
-    <span class="badge-title">🤝 Plano Consórcio Peso Certo</span>
-    Compra programada com <strong>15% de desconto</strong> sobre o preço de tabela. Entrada de <strong>25% no cartão</strong> (em até 4x sem juros) + restante parcelado em boleto. Produto liberado após <strong>quitação total</strong>.
-  </div>
-
-  <div class="section no-print">
-    <div class="section-title">📦 Produtos</div>
-    <div class="prod-header"><span>Produto</span><span>Valor Unit.</span><span>Qtd</span><span></span></div>
-    <div id="k_produtos"></div>
-    <div class="actions"><button class="btn-add" onclick="addProd('k')">+ Adicionar Produto</button></div>
-  </div>
-
-  <div class="section no-print">
-    <div class="section-title">💳 Entrada no Cartão (25%)</div>
-    <div id="k_entrada_info" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text2);margin-bottom:10px"></div>
-    <div style="font-size:11px;color:var(--text3);margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:.6px">Dividir entrada em:</div>
-    <div class="ent-opts">
-      <button class="ent-opt sel" onclick="setEntOpt(1,this)">1x (à vista)</button>
-      <button class="ent-opt" onclick="setEntOpt(2,this)">2x no cartão</button>
-      <button class="ent-opt" onclick="setEntOpt(3,this)">3x no cartão</button>
-      <button class="ent-opt" onclick="setEntOpt(4,this)">4x no cartão</button>
-    </div>
-  </div>
-
-  <div class="kpis" id="k_kpis"></div>
-
-  <div class="section no-print">
-    <div class="section-title">📊 3 Opções de Parcelamento do Restante (Boleto)</div>
-    <table class="desc-table" id="k_tabela"></table>
-  </div>
-
-  <div class="section no-print">
-    <div class="section-title no-print">📱 Mensagem WhatsApp</div>
-    <div class="frete-toggle">
-      <label>
-        <input type="checkbox" class="frete-chk" id="k_frete" checked onchange="calcConsorcio()">
-        <span class="frete-label" id="k_frete_label">🚚 Frete Grátis</span>
-      </label>
-      <label style="margin-left:12px">
-        <input type="checkbox" class="frete-chk" id="k_entrega" checked onchange="calcConsorcio()">
-        <span class="frete-label" id="k_entrega_label">📦 Pronta Entrega</span>
-      </label>
-      <span style="font-size:10px;color:var(--text3)">Aparecem na mensagem WhatsApp</span>
-    </div>
-    <div class="msg" id="k_msg" onclick="copyThis(this)"><span class="copy-badge">📋 COPIAR</span></div>
-  </div>
-
-  <div class="section print-section">
-    <div class="section-title">📋 Resumo do Plano Consórcio</div>
-    <table class="desc-table" id="k_resumo"></table>
-    <div class="cons-avisos">
-      <div class="cons-avisos-title">📌 Condições do Plano</div>
-      <ul>
-        <li>🔒 <span><strong>Preço fixo garantido</strong> — nenhum reajuste após a formalização do pedido, independentemente de prazo ou variação de mercado.</span></li>
-        <li>📄 <span><strong>Compra formalizada com contrato</strong> — toda operação é documentada e assinada pelas duas partes, garantindo segurança jurídica.</span></li>
-        <li>📦 <span><strong>Produto reservado em estoque</strong> — o equipamento fica separado e garantido no momento da confirmação do pedido.</span></li>
-        <li>⏱️ <span><strong>Prazo mínimo de 30 dias</strong> — a liberação do produto ocorre somente após a quitação total, nunca antes de 30 dias a partir do pedido.</span></li>
-        <li>✅ <span><strong>Sem consulta ao SPC/Serasa</strong> — o plano não exige análise de crédito. A aprovação é baseada no compromisso de pagamento formalizado.</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section print-section">
-    <div class="section-title">📷 Imagens do Orçamento</div>
-    <input type="file" class="img-input" id="k_imgInput" accept="image/*" multiple onchange="addImages('k',this)">
-    <div class="actions"><button class="btn-img no-print" onclick="document.getElementById('k_imgInput').click()">📷 Adicionar Fotos</button></div>
-    <div class="img-gallery" id="k_gallery"></div>
-    <div class="print-frete-info" id="k_print_frete"></div>
   </div>
   <div class="actions no-print"><button class="btn-print" onclick="window.print()">🖨️ Imprimir Orçamento</button></div>
 </div>
@@ -557,16 +560,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           </div>
         </div>
 
-        <!-- CONSÓRCIO -->
-        <div class="admin-section">
-          <div class="admin-section-title">🤝 Consórcio</div>
-          <div class="admin-grid">
-            <div class="admin-field"><label>% Desconto Consórcio</label><input type="number" id="cfg_kDesc" step="0.5" min="0" max="50"></div>
-            <div class="admin-field"><label>% Entrada (sobre valor c/ desc.)</label><input type="number" id="cfg_kEnt" step="5" min="0" max="100"></div>
-            <div class="admin-field"><label>Máx. Parcelas Entrada Cartão</label><input type="number" id="cfg_kMaxParc" step="1" min="1" max="12"></div>
-          </div>
-        </div>
-
         <!-- CUSTOS / DRE -->
         <div class="admin-section">
           <div class="admin-section-title">📊 Custos para DRE</div>
@@ -592,7 +585,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <div id="dreAbaSelector" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
           <button class="ent-opt sel" onclick="setDreAba('cartao',this)">💳 Cartão/PIX</button>
           <button class="ent-opt" onclick="setDreAba('boleto',this)">📑 Boleto</button>
-          <button class="ent-opt" onclick="setDreAba('consorcio',this)">🤝 Consórcio</button>
         </div>
         <div id="dreContent"></div>
       </div>
@@ -617,7 +609,6 @@ var CFG = {
   outrosCustos: 0   // R$ outros custos fixos por venda
 };
 var ADMIN_PIN = '0417';
-var CONS_ENT_PARCS = 1;
 var prods={c:[{nome:'',valor:5000,qtd:1}],b:[{nome:'',valor:3548,qtd:1}]};
 var imgs={c:[],b:[]};
 
@@ -625,8 +616,8 @@ function R$(v){return'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,max
 function pct(v){return v.toFixed(1).replace('.0','')+' %';}
 function maskPhone(el){var v=el.value.replace(/\D/g,'');if(v.length>11)v=v.slice(0,11);if(v.length>6)v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);else if(v.length>2)v='('+v.slice(0,2)+') '+v.slice(2);else if(v.length>0)v='('+v;el.value=v;}
 function getCnpj(){return document.getElementById('cnpjSelect').value;}
-function onCnpjChange(){updatePrintInfo();calcCartao();calcBoleto();calcConsorcio();}
-function onInfoChange(){updatePrintInfo();calcCartao();calcBoleto();calcConsorcio();}
+function onCnpjChange(){updatePrintInfo();calcCartao();calcBoleto();}
+function onInfoChange(){updatePrintInfo();calcCartao();calcBoleto();}
 function updatePrintInfo(){
   var n=document.getElementById('vendNome').value.trim();
   var c=document.getElementById('vendCel').value.trim();
@@ -684,6 +675,7 @@ function renderGallery(t){
     h+='<div class="img-thumb"><img src="'+imgs[t][i]+'" alt="Foto '+(i+1)+'"><button class="img-del no-print" onclick="removeImg(\''+t+'\','+i+')">✕</button></div>';
   }
   document.getElementById(t+'_gallery').innerHTML=h;
+  var sec=document.getElementById(t+'_imgSection');if(sec)sec.classList.toggle('vazio',imgs[t].length===0);
 }
 
 /* PRODS */
@@ -691,7 +683,7 @@ function renderProds(t){
   var list=prods[t];var fn=t==='c'?'Cartao':'Boleto';var h='';
   for(var i=0;i<list.length;i++){
     h+='<div class="prod-item">'
-      +'<input class="nome-input" type="text" value="'+(list[i].nome||'')+'" placeholder="Nome do produto" oninput="prods.'+t+'['+i+'].nome=this.value;calc'+fn+'()">'
+      +'<input class="nome-input" type="text" value="'+(list[i].nome||'').replace(/"/g,'&quot;')+'" placeholder="Nome do produto" oninput="prods.'+t+'['+i+'].nome=this.value;calc'+fn+'()">'
       +'<input type="number" value="'+list[i].valor+'" placeholder="0" oninput="prods.'+t+'['+i+'].valor=parseFloat(this.value)||0;calc'+fn+'()">'
       +'<input class="qtd-input" type="number" value="'+list[i].qtd+'" min="1" oninput="prods.'+t+'['+i+'].qtd=parseInt(this.value)||1;calc'+fn+'()">'
       +(list.length>1?'<button class="btn-remove" onclick="prods.'+t+'.splice('+i+',1);renderProds(\''+t+'\');calc'+fn+'()">✕</button>':'<div></div>')
@@ -702,30 +694,28 @@ function renderProds(t){
 function addProd(t){prods[t].push({nome:'',valor:0,qtd:1});renderProds(t);}
 function getTotal(t){var s=0;for(var i=0;i<prods[t].length;i++)s+=prods[t][i].valor*(prods[t][i].qtd||1);return s;}
 
-function freteStr(id){
-  var chk=document.getElementById(id+'_frete');
-  var lbl=document.getElementById(id+'_frete_label');
-  var ok=chk&&chk.checked;
-  if(lbl)lbl.textContent=ok?'🚚 Frete Grátis':'🚚 Frete a combinar';
-  return ok?'\n👉 *Frete grátis*':'\n👉 *Frete a combinar*';
+var OPTS={c:{frete:'gratis',entrega:'pronta'},b:{frete:'gratis',entrega:'pronta'}};
+var OPT_TXT={frete:{gratis:'Frete grátis',combinar:'Frete a combinar'},entrega:{pronta:'Pronta entrega',encomenda:'Sob encomenda'}};
+function setOpt(t,campo,v){
+  OPTS[t][campo]=v;
+  var bs=document.querySelectorAll('#'+t+'_'+campo+'_opts .seg-opt');
+  for(var i=0;i<bs.length;i++)bs[i].classList.toggle('sel',bs[i].getAttribute('data-v')===v);
+  if(t==='c')calcCartao();else calcBoleto();
 }
-function entregaStr(id){
-  var chk=document.getElementById(id+'_entrega');
-  var lbl=document.getElementById(id+'_entrega_label');
-  var ok=chk&&chk.checked;
-  if(lbl)lbl.textContent=ok?'📦 Pronta Entrega':'📦 Encomenda';
-  return ok?'\n👉 *Pronta entrega*':'\n👉 *Sob encomenda*';
+function extrasStr(t){
+  var s='';
+  if(OPTS[t].entrega)s+='\n👉 *'+OPT_TXT.entrega[OPTS[t].entrega]+'*';
+  if(OPTS[t].frete)s+='\n👉 *'+OPT_TXT.frete[OPTS[t].frete]+'*';
+  return s?'\n'+s:'';
 }
-function updatePrintFrete(id){
-  var el=document.getElementById(id+'_print_frete');
+function updatePrintFrete(t){
+  var el=document.getElementById(t+'_print_frete');
   if(!el)return;
-  var fChk=document.getElementById(id+'_frete');
-  var eChk=document.getElementById(id+'_entrega');
-  var fOk=fChk&&fChk.checked;
-  var eOk=eChk&&eChk.checked;
-  el.innerHTML=
-    '<strong>🚚 Frete:</strong> '+(fOk?'Grátis':'A combinar')+
-    ' &nbsp;&nbsp; <strong>📦 Entrega:</strong> '+(eOk?'Pronta Entrega':'Encomenda');
+  var p=[];
+  if(OPTS[t].frete)p.push('<span><strong>🚚 Frete:</strong> '+OPT_TXT.frete[OPTS[t].frete].replace('Frete ','').replace(/^./,function(c){return c.toUpperCase();})+'</span>');
+  if(OPTS[t].entrega)p.push('<span><strong>📦 Entrega:</strong> '+OPT_TXT.entrega[OPTS[t].entrega]+'</span>');
+  el.innerHTML=p.join('');
+  el.classList.toggle('vazio',p.length===0);
 }
 function prodLine(p,i){
   var q=p.qtd||1;var sub=p.valor*q;
@@ -735,59 +725,88 @@ function prodLine(p,i){
   return '• '+nome+': '+R$(sub);
 }
 
+var C_SHOW={v:true,'6':true,'12':true,'21':true};
+function toggleCond(k,btn){
+  if(btn.classList.contains('off'))return;
+  var on=0;for(var x in C_SHOW)if(C_SHOW[x])on++;
+  if(C_SHOW[k]&&on===1)return; // pelo menos uma condição fica ligada
+  C_SHOW[k]=!C_SHOW[k];
+  calcCartao();
+}
+function updateCondChips(s21){
+  var bs=document.querySelectorAll('#c_conds .cond-opt');
+  for(var i=0;i<bs.length;i++){
+    var k=bs[i].getAttribute('data-k');
+    bs[i].classList.toggle('sel',!!C_SHOW[k]&&(k!=='21'||s21));
+    bs[i].classList.toggle('off',k==='21'&&!s21);
+    if(k==='21')bs[i].title=s21?'':'21x só a partir de '+R$(CFG.min21);
+  }
+  var h=document.getElementById('c_cond_hint');
+  if(h)h.textContent='Clique para ligar/desligar. Vale para os cards, a mensagem do WhatsApp e o impresso.'+(s21?'':' (21x liberado a partir de '+R$(CFG.min21)+')');
+}
+
 function calcCartao(){
   var total=getTotal('c');
   var dv=CFG.dVista/100, d6=CFG.d6/100, d12=CFG.d12/100;
   var v12=total*(1-d12),v6=total*(1-d6),vV=total*(1-dv);
   var p12=Math.ceil(v12/12),p6=Math.ceil(v6/6),p21=Math.floor(total/21);
   var s21=total>=CFG.min21;
+  var sh={v:C_SHOW.v,'6':C_SHOW['6'],'12':C_SHOW['12'],'21':C_SHOW['21']&&s21};
+  updateCondChips(s21);
   var vend=document.getElementById('vendNome').value.trim();
   var cel=document.getElementById('vendCel').value.trim();
+  var mes='<span style="font-size:10px;color:var(--text2)">/mês</span>';
 
-  document.getElementById('c_kpis').innerHTML=
-    '<div class="kpi"><div class="kpi-label">À Vista / PIX</div><div class="kpi-val c-green">'+R$(Math.ceil(vV))+'</div><div class="kpi-sub">'+pct(CFG.dVista)+' off</div></div>'+
-    '<div class="kpi"><div class="kpi-label">6x Cartão</div><div class="kpi-val c-blue">'+R$(p6)+'<span style="font-size:10px;color:var(--text2)">/mês</span></div><div class="kpi-sub">Total: '+R$(p6*6)+'</div></div>'+
-    '<div class="kpi"><div class="kpi-label">12x Cartão</div><div class="kpi-val c-amber">'+R$(p12)+'<span style="font-size:10px;color:var(--text2)">/mês</span></div><div class="kpi-sub">Total: '+R$(p12*12)+'</div></div>'+
-    (s21?'<div class="kpi"><div class="kpi-label">21x Cartão</div><div class="kpi-val c-purple">'+R$(p21)+'<span style="font-size:10px;color:var(--text2)">/mês</span></div><div class="kpi-sub">Total: '+R$(p21*21)+'</div></div>'
-    :'<div class="kpi"><div class="kpi-label">Economia</div><div class="kpi-val c-green">'+R$(total-Math.ceil(vV))+'</div><div class="kpi-sub">à vista vs tabela</div></div>');
+  // KPIs (só as condições ligadas)
+  var k=[];
+  if(sh.v)k.push('<div class="kpi"><div class="kpi-label">À Vista / PIX</div><div class="kpi-val c-green">'+R$(Math.ceil(vV))+'</div><div class="kpi-sub">'+pct(CFG.dVista)+' off</div></div>');
+  if(sh['6'])k.push('<div class="kpi"><div class="kpi-label">6x Cartão</div><div class="kpi-val c-blue">'+R$(p6)+mes+'</div><div class="kpi-sub">Total: '+R$(p6*6)+'</div></div>');
+  if(sh['12'])k.push('<div class="kpi"><div class="kpi-label">12x Cartão</div><div class="kpi-val c-amber">'+R$(p12)+mes+'</div><div class="kpi-sub">Total: '+R$(p12*12)+'</div></div>');
+  if(sh['21'])k.push('<div class="kpi"><div class="kpi-label">21x Cartão</div><div class="kpi-val c-purple">'+R$(p21)+mes+'</div><div class="kpi-sub">Total: '+R$(p21*21)+'</div></div>');
+  if(k.length<4&&sh.v)k.push('<div class="kpi"><div class="kpi-label">Economia</div><div class="kpi-val c-green">'+R$(total-Math.ceil(vV))+'</div><div class="kpi-sub">à vista vs tabela</div></div>');
+  var kEl=document.getElementById('c_kpis');
+  kEl.innerHTML=k.join('');
+  kEl.setAttribute('data-n',k.length);
+  kEl.style.gridTemplateColumns=(k.length<4&&(k.length<=2||window.innerWidth>=600))?'repeat('+k.length+',1fr)':'';
 
+  // Mensagem WhatsApp
   var lines=[];var multi=prods.c.length>1;
   for(var i=0;i<prods.c.length;i++){var ln=prodLine(prods.c[i],i);if(ln)lines.push(ln);}
   var pl=lines.join('\n');
   if(multi)pl+='\n\n📦 *Total: '+R$(total)+'*';
+  var cond=[];
+  if(sh.v)cond.push('* *À vista:* '+R$(Math.ceil(vV)));
+  if(sh['6'])cond.push('* *6x:* '+R$(p6)+'  (Total: '+R$(p6*6)+')');
+  if(sh['12'])cond.push('* *12x:* '+R$(p12)+'  (Total: '+R$(p12*12)+')');
+  if(sh['21'])cond.push('* *21x:* '+R$(p21)+'  (Total: '+R$(p21*21)+')');
 
   var msg='*Segue o orçamento:*';
   if(vend){msg+='\n_Vendedor: '+vend;if(cel)msg+=' | '+cel;msg+='_';}
   msg+='\n\n'+pl;
-  msg+='\n\n'+(multi?'💰 *Valor de tabela:* ~'+R$(total)+'~\n\n':'')+'🚀 *Promoção Hoje* ✅\n\n* *À vista:* '+R$(Math.ceil(vV))+'\n* *6x:* '+R$(p6)+'  (Total: '+R$(p6*6)+')'+'  \n* *12x:* '+R$(p12)+'  (Total: '+R$(p12*12)+')';
-  if(s21)msg+='\n* *21x:* '+R$(p21)+'  (Total: '+R$(p21*21)+')';
-  msg+='\n\n'+entregaStr('c')+freteStr('c');
+  msg+='\n\n'+(multi?'💰 *Valor de tabela:* ~'+R$(total)+'~\n\n':'')+'🚀 *Promoção Hoje* ✅\n\n'+cond.join('\n');
+  msg+=extrasStr('c');
   setMsg('c_msg',msg);
   updatePrintFrete('c');
 
-  var th='<thead><tr><th style="text-align:left">Produto</th><th>Qtd</th><th>Subtotal</th><th>À Vista</th><th>6x</th><th>12x</th>'+(s21?'<th>21x</th>':'')+'</tr></thead><tbody>';
+  // Tabela resumo (impressão) — só colunas ligadas
+  var th='<thead><tr><th style="text-align:left">Produto</th><th>Qtd</th><th>Subtotal</th>'
+    +(sh.v?'<th>À Vista</th>':'')+(sh['6']?'<th>6x</th>':'')+(sh['12']?'<th>12x</th>':'')+(sh['21']?'<th>21x</th>':'')+'</tr></thead><tbody>';
+  function cel6(p,n){return '<td class="td-price">'+R$(p)+'/mês<span class="td-total">Total: '+R$(p*n)+'</span></td>';}
   for(var i=0;i<prods.c.length;i++){
     var v=prods.c[i].valor;var q=prods.c[i].qtd||1;var sub=v*q;
     if(sub>0){
-      var av=Math.ceil(sub*(1-dv));
-      var s6p=Math.ceil(sub*(1-d6)/6),s6t=s6p*6;
-      var s12p=Math.ceil(sub*(1-d12)/12),s12t=s12p*12;
-      var s21p=Math.floor(sub/21),s21t=s21p*21;
       th+='<tr><td style="text-align:left">'+(prods.c[i].nome||'Produto '+(i+1))+'</td><td>'+q+'</td><td>'+R$(sub)+'</td>'
-        +'<td>'+R$(av)+'</td>'
-        +'<td class="td-price">'+R$(s6p)+'/mês<span class="td-total">Total: '+R$(s6t)+'</span></td>'
-        +'<td class="td-price">'+R$(s12p)+'/mês<span class="td-total">Total: '+R$(s12t)+'</span></td>'
-        +(s21?'<td class="td-price">'+R$(s21p)+'/mês<span class="td-total">Total: '+R$(s21t)+'</span></td>':'')
+        +(sh.v?'<td>'+R$(Math.ceil(sub*(1-dv)))+'</td>':'')
+        +(sh['6']?cel6(Math.ceil(sub*(1-d6)/6),6):'')
+        +(sh['12']?cel6(Math.ceil(sub*(1-d12)/12),12):'')
+        +(sh['21']?cel6(Math.floor(sub/21),21):'')
         +'</tr>';
     }
   }
   if(multi){
-    var av=Math.ceil(vV);
     th+='<tr style="font-weight:700"><td style="text-align:left">TOTAL</td><td></td><td>'+R$(total)+'</td>'
-      +'<td>'+R$(av)+'</td>'
-      +'<td class="td-price">'+R$(p6)+'/mês<span class="td-total">Total: '+R$(p6*6)+'</span></td>'
-      +'<td class="td-price">'+R$(p12)+'/mês<span class="td-total">Total: '+R$(p12*12)+'</span></td>'
-      +(s21?'<td class="td-price">'+R$(p21)+'/mês<span class="td-total">Total: '+R$(p21*21)+'</span></td>':'')
+      +(sh.v?'<td>'+R$(Math.ceil(vV))+'</td>':'')
+      +(sh['6']?cel6(p6,6):'')+(sh['12']?cel6(p12,12):'')+(sh['21']?cel6(p21,21):'')
       +'</tr>';
   }
   th+='</tbody>';document.getElementById('c_resumo').innerHTML=th;
@@ -847,7 +866,7 @@ function calcBoleto(){
   msgB+='\n✅ *Valor Final:* '+R$(fin)+'\n';
   if(n===1)msgB+='\n📌 *Pagamento em 30 dias:* '+R$(fin);
   else msgB+='\n📌 *Entrada ('+pctE+'% do valor bruto):* '+R$(ent)+'\n📌 *'+nP+' parcela'+(nP>1?'s':'')+' de:* '+R$(Math.round(parc));
-  msgB+='\n\n'+entregaStr('b')+freteStr('b');
+  msgB+=extrasStr('b');
   setMsg('b_msg',msgB);
   updatePrintFrete('b');
 
@@ -943,9 +962,6 @@ function loadAdminFields(){
   document.getElementById('cfg_min21').value=CFG.min21;
   for(var i=1;i<=7;i++) document.getElementById('cfg_b'+i).value=CFG.b[i]||0;
   document.getElementById('cfg_entMin').value=CFG.entMin;
-  document.getElementById('cfg_kDesc').value=CFG.kDesc;
-  document.getElementById('cfg_kEnt').value=CFG.kEnt;
-  document.getElementById('cfg_kMaxParc').value=CFG.kMaxParc;
   document.getElementById('cfg_cmv').value=CFG.cmv;
   document.getElementById('cfg_comissao').value=CFG.comissao;
   document.getElementById('cfg_taxa6').value=CFG.taxa6;
@@ -962,9 +978,6 @@ function saveAdminConfig(){
   CFG.min21=parseFloat(document.getElementById('cfg_min21').value)||CFG.min21;
   for(var i=1;i<=7;i++) CFG.b[i]=parseFloat(document.getElementById('cfg_b'+i).value)||0;
   CFG.entMin=parseFloat(document.getElementById('cfg_entMin').value)||CFG.entMin;
-  CFG.kDesc=parseFloat(document.getElementById('cfg_kDesc').value)||CFG.kDesc;
-  CFG.kEnt=parseFloat(document.getElementById('cfg_kEnt').value)||CFG.kEnt;
-  CFG.kMaxParc=parseInt(document.getElementById('cfg_kMaxParc').value)||CFG.kMaxParc;
   CFG.cmv=parseFloat(document.getElementById('cfg_cmv').value)||CFG.cmv;
   CFG.comissao=parseFloat(document.getElementById('cfg_comissao').value)||0;
   CFG.taxa6=parseFloat(document.getElementById('cfg_taxa6').value)||0;
@@ -973,8 +986,7 @@ function saveAdminConfig(){
   CFG.taxaBol=parseFloat(document.getElementById('cfg_taxaBol').value)||0;
   CFG.frete=parseFloat(document.getElementById('cfg_frete').value)||0;
   CFG.outrosCustos=parseFloat(document.getElementById('cfg_outrosCustos').value)||0;
-  renderEntOpts();
-  calcCartao();calcBoleto();calcConsorcio();
+  calcCartao();calcBoleto();
   var s=document.getElementById('adminSaved');
   s.classList.add('show');
   setTimeout(function(){s.classList.remove('show');},2500);
@@ -1017,13 +1029,6 @@ function calcDRE(aba){
     taxa = receita * CFG.taxaBol/100;
     descLabel = 'Boleto '+(n===1?'30 dias':n+'x')+' ('+(CFG.b[n]||0)+'% off)';
     parcelasLabel = n===1?'30 dias':n+'x boleto';
-  } else {
-    total = getTotal('k');
-    var kd = CFG.kDesc/100;
-    receita = total*(1-kd);
-    taxa = receita * CFG.taxaBol/100; // entrada no cartão aprox.
-    descLabel = 'Consórcio ('+CFG.kDesc+'% off)';
-    parcelasLabel = 'Consórcio';
   }
 
   if(total<=0){
@@ -1088,124 +1093,10 @@ function calcDRE(aba){
   document.getElementById('dreContent').innerHTML = html;
 }
 
-function renderEntOpts(){
-  var el=document.querySelector('.ent-opts');
-  if(!el)return;
-  var h='<button class="ent-opt sel" onclick="setEntOpt(1,this)">1x (à vista)</button>';
-  for(var i=2;i<=CFG.kMaxParc;i++){
-    h+='<button class="ent-opt" onclick="setEntOpt('+i+',this)">'+i+'x no cartão</button>';
-  }
-  el.innerHTML=h;
-  CONS_ENT_PARCS=1;
-}
-
 // fechar overlay clicando fora
 document.getElementById('adminOverlay').addEventListener('click',function(e){if(e.target===this)closeAdmin();});
 
-// ============ CONSÓRCIO ============
-imgs['k'] = [];
-prods['k'] = [{nome:'',valor:0,qtd:1}];
-
-function setEntOpt(n, btn){
-  CONS_ENT_PARCS = n;
-  document.querySelectorAll('.ent-opt').forEach(function(b){b.classList.remove('sel');});
-  btn.classList.add('sel');
-  calcConsorcio();
-}
-
-function renderProdsK(){
-  var list=prods['k']; var h='';
-  for(var i=0;i<list.length;i++){
-    h+='<div class="prod-item">'
-      +'<input class="nome-input" type="text" value="'+(list[i].nome||'')+'" placeholder="Nome do produto" oninput="prods.k['+i+'].nome=this.value;calcConsorcio()">'
-      +'<input type="number" value="'+list[i].valor+'" placeholder="0" oninput="prods.k['+i+'].valor=parseFloat(this.value)||0;calcConsorcio()">'
-      +'<input class="qtd-input" type="number" value="'+list[i].qtd+'" min="1" oninput="prods.k['+i+'].qtd=parseInt(this.value)||1;calcConsorcio()">'
-      +(list.length>1?'<button class="btn-remove" onclick="prods.k.splice('+i+',1);renderProdsK();calcConsorcio()">✕</button>':'<div></div>')
-      +'</div>';
-  }
-  document.getElementById('k_produtos').innerHTML=h;
-}
-
-function calcConsorcio(){
-  var total = getTotal('k');
-  var vend = document.getElementById('vendNome').value.trim();
-  var cel  = document.getElementById('vendCel').value.trim();
-
-  var descPct = CFG.kDesc/100;
-  var entPct  = CFG.kEnt/100;
-  var desc    = total * descPct;
-  var final   = total - desc;
-  var entrada = Math.ceil(final * entPct);
-  var restante= final - entrada;
-  var entParc = Math.ceil(entrada / CONS_ENT_PARCS);
-
-  document.getElementById('k_entrada_info').innerHTML =
-    'Entrada: <strong style="color:var(--gold)">'+R$(entrada)+'</strong>' +
-    (CONS_ENT_PARCS>1 ? ' → <strong style="color:var(--amber)">'+CONS_ENT_PARCS+'x de '+R$(entParc)+'</strong> no cartão (sem juros)' : ' → à vista no cartão');
-
-  document.getElementById('k_kpis').innerHTML =
-    '<div class="kpi" style="border-color:rgba(245,158,11,.3)"><div class="kpi-label">Valor Tabela</div><div class="kpi-val" style="color:var(--text2);text-decoration:line-through">'+R$(total)+'</div></div>'+
-    '<div class="kpi" style="border-color:rgba(245,158,11,.4)"><div class="kpi-label">Com Desconto '+CFG.kDesc+'%</div><div class="kpi-val c-gold">'+R$(final)+'</div><div class="kpi-sub">Economia: '+R$(desc)+'</div></div>'+
-    '<div class="kpi"><div class="kpi-label">Entrada Cartão</div><div class="kpi-val c-green">'+R$(entrada)+'</div><div class="kpi-sub">'+(CONS_ENT_PARCS>1?CONS_ENT_PARCS+'x de '+R$(entParc):'À vista')+'</div></div>'+
-    '<div class="kpi"><div class="kpi-label">Restante Boleto</div><div class="kpi-val c-blue">'+R$(restante)+'</div><div class="kpi-sub">'+CFG.kEnt+'% pago na entrada</div></div>';
-
-  var op1p = Math.ceil(restante/3);
-  var op2p = Math.ceil(restante/6);
-  var op3p = Math.ceil(restante/16);
-
-  var tabHtml = '<thead><tr><th>Opção</th><th>Qtd Parcelas</th><th>Intervalo</th><th>Valor/Parcela</th><th>Total Restante</th></tr></thead><tbody>'+
-    '<tr><td>🅐</td><td>3x</td><td>Mensal (30/60/90 dias)</td><td class="td-price">'+R$(op1p)+'</td><td>'+R$(op1p*3)+'</td></tr>'+
-    '<tr><td>🅑</td><td>6x</td><td>A cada 20 dias</td><td class="td-price">'+R$(op2p)+'</td><td>'+R$(op2p*6)+'</td></tr>'+
-    '<tr><td>🅒</td><td>16x</td><td>Semanal</td><td class="td-price">'+R$(op3p)+'</td><td>'+R$(op3p*16)+'</td></tr>'+
-    '</tbody>';
-  document.getElementById('k_tabela').innerHTML = tabHtml;
-
-  var multi = prods['k'].length > 1;
-  var sumHtml = '<thead><tr><th style="text-align:left">Produto</th><th>Qtd</th><th>Tabela</th><th>Com Desconto</th><th>Entrada (Cartão)</th><th>Restante (Boleto)</th></tr></thead><tbody>';
-  for(var i=0;i<prods['k'].length;i++){
-    var v=prods['k'][i].valor;var q=prods['k'][i].qtd||1;var sub=v*q;
-    if(sub>0){
-      var sf=Math.round(sub*(1-descPct));
-      var se=Math.ceil(sf*entPct);
-      var sr=sf-se;
-      sumHtml+='<tr><td style="text-align:left">'+(prods['k'][i].nome||'Produto '+(i+1))+'</td><td>'+q+'</td><td>'+R$(sub)+'</td><td>'+R$(sf)+'</td><td>'+R$(se)+'</td><td>'+R$(sr)+'</td></tr>';
-    }
-  }
-  if(multi){
-    sumHtml+='<tr style="font-weight:700"><td style="text-align:left">TOTAL</td><td></td><td>'+R$(total)+'</td><td>'+R$(final)+'</td><td>'+R$(entrada)+'</td><td>'+R$(restante)+'</td></tr>';
-  }
-  sumHtml+='</tbody>';
-  document.getElementById('k_resumo').innerHTML = sumHtml;
-
-  var lines=[];var multiPl=prods['k'].length>1;
-  for(var i=0;i<prods['k'].length;i++){var ln=prodLine(prods['k'][i],i);if(ln)lines.push(ln);}
-  var pl=lines.join('\n');
-  if(multiPl)pl+='\n📦 *Total tabela: '+R$(total)+'*';
-
-  var msg = '*🤝 Plano Consórcio Peso Certo*';
-  if(vend){msg+='\n_Vendedor: '+vend;if(cel)msg+=' | '+cel;msg+='_';}
-  msg+='\n\n'+pl+'\n\n💰 *Preço de tabela:* ~'+R$(total)+'~';
-  msg+='\n🏷️ *Desconto Consórcio '+CFG.kDesc+'%:* '+R$(desc);
-  msg+='\n✅ *Valor com desconto:* *'+R$(final)+'*';
-  msg+='\n\n━━━━━━━━━━━━━━━━━━━━';
-  msg+='\n💳 *ENTRADA ('+CFG.kEnt+'%) — Cartão:*';
-  msg+='\n   '+R$(entrada)+(CONS_ENT_PARCS>1?' — em '+CONS_ENT_PARCS+'x de '+R$(entParc)+' (sem juros)':' — à vista');
-  msg+='\n\n📑 *RESTANTE — Boleto ('+R$(restante)+'):*';
-  msg+='\n   🅐 3x mensais: '+R$(op1p)+'/mês';
-  msg+='\n   🅑 6x a cada 20 dias: '+R$(op2p)+'/parcela';
-  msg+='\n   🅒 16x semanais: '+R$(op3p)+'/semana';
-  msg+='\n\n━━━━━━━━━━━━━━━━━━━━';
-  msg+='\n📌 Produto liberado após quitação total (mín. 30 dias)';
-  msg+='\n🔒 Preço fixo — sem reajuste após formalização';
-  msg+='\n📄 Compra formalizada com contrato';
-  msg+='\n📦 Produto reservado em estoque';
-  msg+='\n✅ Sem consulta SPC/Serasa';
-  msg+=entregaStr('k')+freteStr('k');
-  setMsg('k_msg', msg);
-  updatePrintFrete('k');
-}
-
-renderProds('c');renderProds('b');renderProdsK();updatePrintInfo();calcCartao();calcBoleto();calcConsorcio();
+renderProds('c');renderProds('b');updatePrintInfo();calcCartao();calcBoleto();
 </script>
 
 
