@@ -117,6 +117,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 /* IMAGES */
 .img-gallery{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.dropzone{border:2px dashed var(--border);border-radius:12px;padding:22px 16px;text-align:center;cursor:pointer;background:var(--bg2);transition:all .15s}
+.dropzone:hover{border-color:var(--blue,#2563eb)}
+.dropzone.over{border-color:#16a34a;background:#ecfdf3}
+.dz-ic{font-size:26px}.dz-t{font-size:13px;color:var(--text);margin-top:4px}.dz-s{font-size:11px;color:var(--text3);margin-top:3px}
+.dz-msg{font-size:11px;font-weight:700;color:#c26a05;margin-top:6px}
 .img-gallery .img-thumb{position:relative;width:100px;height:100px;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
 .img-gallery .img-thumb img{width:100%;height:100%;object-fit:cover}
 .img-gallery .img-thumb .img-del{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.7);color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
@@ -513,7 +518,9 @@ input::-webkit-inner-spin-button{opacity:.5}
   <div class="section print-section img-section vazio" id="c_imgSection">
     <div class="section-title">📷 Fotos do Produto <small style="font-weight:600;color:var(--text3)">— até 3 entram na imagem do WhatsApp</small></div>
     <input type="file" class="img-input" id="c_imgInput" accept="image/*" multiple onchange="addImages('c',this)">
-    <div class="actions"><button class="btn-img no-print" onclick="document.getElementById('c_imgInput').click()">📷 Adicionar Fotos</button></div>
+    <div class="dropzone no-print" id="c_drop" onclick="document.getElementById('c_imgInput').click()" ondragover="dzOver(event,this)" ondragleave="this.classList.remove('over')" ondrop="dzDrop(event,'c',this)">
+      <div class="dz-ic">🖼️</div><div class="dz-t"><b>Arraste as fotos aqui</b> ou cole com <b>Ctrl+V</b></div><div class="dz-s">ou clique para escolher no computador / tirar foto no celular</div><div class="dz-msg" id="c_dzmsg"></div>
+    </div>
     <div class="img-gallery" id="c_gallery"></div>
   </div>
   <!-- 4. WHATSAPP -->
@@ -595,7 +602,9 @@ input::-webkit-inner-spin-button{opacity:.5}
   <div class="section print-section img-section vazio" id="b_imgSection">
     <div class="section-title">📷 Fotos do Produto <small style="font-weight:600;color:var(--text3)">— até 3 entram na imagem do WhatsApp</small></div>
     <input type="file" class="img-input" id="b_imgInput" accept="image/*" multiple onchange="addImages('b',this)">
-    <div class="actions"><button class="btn-img no-print" onclick="document.getElementById('b_imgInput').click()">📷 Adicionar Fotos</button></div>
+    <div class="dropzone no-print" id="b_drop" onclick="document.getElementById('b_imgInput').click()" ondragover="dzOver(event,this)" ondragleave="this.classList.remove('over')" ondrop="dzDrop(event,'b',this)">
+      <div class="dz-ic">🖼️</div><div class="dz-t"><b>Arraste as fotos aqui</b> ou cole com <b>Ctrl+V</b></div><div class="dz-s">ou clique para escolher no computador / tirar foto no celular</div><div class="dz-msg" id="b_dzmsg"></div>
+    </div>
     <div class="img-gallery" id="b_gallery"></div>
   </div>
   <!-- 4. WHATSAPP -->
@@ -772,17 +781,37 @@ function updatePrintInfo(){
 }
 
 /* IMAGES */
-function addImages(t,input){
-  var files=input.files;
+function addImages(t,input){addFiles(t,input.files);input.value='';}
+function addFiles(t,files){
+  var n=0;
   for(var i=0;i<files.length;i++){
+    if(!/^image\//.test(files[i].type))continue;n++;
     (function(file){
       var reader=new FileReader();
       reader.onload=function(e){imgs[t].push(e.target.result);renderGallery(t);};
       reader.readAsDataURL(file);
     })(files[i]);
   }
-  input.value='';
+  return n;
 }
+function dzMsg(t,m){var e=document.getElementById(t+'_dzmsg');if(e){e.textContent=m;clearTimeout(e._t);e._t=setTimeout(function(){e.textContent='';},5000);}}
+function dzOver(ev,el){ev.preventDefault();el.classList.add('over');}
+function dzDrop(ev,t,el){ev.preventDefault();el.classList.remove('over');
+  var n=addFiles(t,ev.dataTransfer.files||[]);
+  // foto arrastada direto de um site vem como link, não como arquivo: o navegador não deixa usar na imagem
+  if(!n)dzMsg(t,'Não deu para usar essa foto arrastando. Salve a foto no computador e arraste o arquivo, ou copie a foto e cole aqui com Ctrl+V.');}
+// colar foto (Ctrl+V) na aba aberta — só quando não estiver digitando num campo de texto
+document.addEventListener('paste',function(ev){
+  var a=document.activeElement;if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'))return;
+  var items=(ev.clipboardData||{}).items||[],fs=[];
+  for(var i=0;i<items.length;i++)if(items[i].kind==='file'&&/^image\//.test(items[i].type)){var f=items[i].getAsFile();if(f)fs.push(f);}
+  if(!fs.length)return;ev.preventDefault();
+  var t=document.getElementById('tab-boleto').classList.contains('active')?'b':'c';
+  addFiles(t,fs);dzMsg(t,'');
+  var dz=document.getElementById(t+'_drop');if(dz)dz.scrollIntoView({behavior:'smooth',block:'center'});
+});
+// evita o navegador abrir a foto se soltar fora da área
+window.addEventListener('dragover',function(e){e.preventDefault();});window.addEventListener('drop',function(e){if(!e.target.closest||!e.target.closest('.dropzone'))e.preventDefault();});
 function removeImg(t,idx){imgs[t].splice(idx,1);renderGallery(t);}
 function renderGallery(t){
   var h='';
