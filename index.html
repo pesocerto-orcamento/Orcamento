@@ -241,10 +241,85 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 /* TABELA BOLETO MELHORADA */
 .desc-table .sel-badge{display:inline-block;background:rgba(34,197,94,.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:4px;vertical-align:middle}
 /* PRINT: boleto mostra só linha selecionada na tabela de descontos */
+/* modo de impressão do boleto */
+.b-modo{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-bottom:14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px}
+.btn-snap{background:var(--blue,#2563eb);color:#fff;border:none;border-radius:8px;padding:9px 14px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit}
+.btn-snap:disabled{opacity:.6;cursor:wait}
+.bol-tbl{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #dde4f0;border-radius:12px;overflow:hidden;margin-top:10px;font-family:Arial,Helvetica,sans-serif;background:#fff}
+.bol-tbl th{background:#0f2a4a;color:#fff;font-size:12px;font-weight:700;padding:12px 10px;text-align:center}
+.bol-tbl th:first-child{text-align:left;padding-left:16px}
+.bol-tbl td{padding:13px 10px;font-size:14px;color:#1f2937;text-align:center;border-top:1px solid #eef2f7}
+.bol-tbl .r{text-align:right;padding-right:16px}
+.bol-tbl tbody tr:nth-child(even) td{background:#f6f9fc}
+.bol-tbl td.pl{text-align:left;padding-left:16px;font-weight:800;color:#0f2a4a;font-size:15px;white-space:nowrap}
+.bol-tbl td.ds{color:#15803d;font-weight:700}
+.bol-tbl td.pc{font-weight:700;color:#0f172a}
+.bol-tbl td.tt{font-weight:800;color:#0f2a4a;font-size:15px}
+.bol-tbl .rd{display:inline-block;width:14px;height:14px;border:2px solid #94a3b8;border-radius:50%;margin-right:10px;vertical-align:-2px;box-sizing:border-box}
+.bol-tbl tbody tr{cursor:pointer;transition:background .15s}
+.bol-tbl tbody tr:hover td{background:#eef5ff}
+.bol-tbl tbody tr.sel td{background:#ecfdf3!important;border-top-color:#bbe5c8}
+.bol-tbl tbody tr.sel td:first-child{box-shadow:inset 4px 0 0 #16a34a}
+.bol-tbl tbody tr.sel .rd{border-color:#16a34a;background:radial-gradient(circle,#16a34a 45%,transparent 50%)}
+.bol-tbl .sel-badge{display:inline-block;background:#16a34a;color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px;margin-left:8px;vertical-align:2px}
+@media(max-width:600px){.bol-tbl th,.bol-tbl td{padding:10px 5px;font-size:12px}.bol-tbl td.pl,.bol-tbl td.tt{font-size:13px}.bol-tbl .sel-badge{display:none}.bol-tbl .rd{margin-right:5px}}
+/* prévia da imagem */
+.snap-ov{position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px}
+.snap-box{background:#fff;border-radius:14px;max-width:820px;width:100%;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.snap-head{padding:12px 16px;font:700 14px Arial,sans-serif;color:#0f2a4a;display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #e5e7eb}
+.snap-img{overflow:auto;padding:12px;background:#f1f5f9}
+.snap-img img{width:100%;height:auto;display:block;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.snap-acts{display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px;border-top:1px solid #e5e7eb}
+.snap-acts button{border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:9px 14px;font:700 13px Arial,sans-serif;cursor:pointer;color:#0f2a4a}
+.snap-acts button.pri{background:#16a34a;border-color:#16a34a;color:#fff}
+.esc-box{display:none}
+.frete-val{display:none;align-items:center;gap:4px;background:var(--card);border:1px solid var(--green);border-radius:8px;padding:2px 8px}
+.frete-val span{font-size:12px;font-weight:700;color:var(--text2)}
+.frete-val input{width:90px;border:none;background:transparent;font:700 13px inherit;color:var(--text);padding:5px 0;outline:none}
+.b-ctrl{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:6px}
+.b-ctrl .ent{display:flex;align-items:center;gap:6px}
+.b-ctrl .ent input{width:70px;padding:6px 8px;border:1px solid var(--border);border-radius:8px;font:700 13px inherit;background:var(--card);color:var(--text)}
+.b-ctrl .ent input.input-error{border-color:var(--red)}
+.print-only{display:none}
+@media print{.print-only{display:block!important}}
+#b_tabela_nota{display:none!important}
+.img-msg{position:relative;cursor:pointer;background:#f1f5f9;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px}
+.img-msg img{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.12);background:#fff}
+.img-msg .copy-badge{position:absolute;top:16px;right:16px}
+.img-msg.copied .copy-badge{background:#16a34a;color:#fff}
+.img-msg-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.img-msg-acts button{border:1px solid var(--border);background:var(--card);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--text2)}
+.img-msg-st{font-size:11px;color:var(--text3)}
+.bol-tbl .ck{display:none;width:15px;height:15px;border:2px solid #94a3b8;border-radius:4px;margin-right:10px;vertical-align:-2px;box-sizing:border-box;text-align:center;line-height:11px;font-size:11px;color:#fff}
+#tab-boleto.modo-varias .bol-tbl .rd{display:none}
+#tab-boleto.modo-varias .bol-tbl .ck{display:inline-block}
+#tab-boleto.modo-varias .bol-tbl tbody tr.in .ck{background:#16a34a;border-color:#16a34a}
+#tab-boleto.modo-varias .bol-tbl tbody tr.in .ck::after{content:'✓'}
+#tab-boleto.modo-varias .bol-tbl tbody tr.sel td{background:inherit!important;box-shadow:none!important}
+#tab-boleto.modo-varias .bol-tbl tbody tr.in td{background:#ecfdf3!important}
+#tab-boleto.modo-varias .bol-tbl .sel-badge{display:none}
 @media print{
-  #descTable tbody tr:not(.sel){display:none!important}
+  #tab-boleto .kpis,#tab-boleto .print-cond-title{display:none!important}
+  #tab-boleto.modo-uma .b-cond-sec{display:none!important}
+  #tab-boleto.modo-uma .esc-box{display:block!important}
+  #tab-boleto:not(.modo-uma) .esc-box{display:none!important}
+  #tab-boleto.modo-varias .bol-tbl tbody tr:not(.in){display:none!important}
+  .esc-box{border:2.5px solid #16a34a!important;border-radius:12px!important;padding:16px 20px!important;margin:6px 0 14px!important;background:#f0fbf4!important;page-break-inside:avoid}
+  .esc-l{font-size:10px;font-weight:800;letter-spacing:1.2px;color:#15803d;text-transform:uppercase}
+  .esc-plano{font-size:24px;font-weight:900;color:#0f2a4a;margin:4px 0 10px}
+  .esc-linhas{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:15px;color:#1f2937}
+  .esc-linhas b{font-size:19px;color:#0f2a4a}
+  .esc-tot{margin-top:12px;padding-top:10px;border-top:1px dashed #86c99c;font-size:14px;color:#1f2937}
+  .esc-tot b{font-size:17px;color:#15803d}
+  .esc-tot span{display:block;font-size:11px;color:#555;margin-top:3px}
+  .esc-ex{margin-top:10px;font-size:13px;font-weight:700;color:#15803d}
   #b_tabela_nota{display:none!important}
-  #descTable tr.sel td{background:#e8f4ed!important;font-weight:700!important}
+  .bol-tbl .sel-badge,.bol-tbl .rd,.bol-tbl .ck{display:none!important}
+  #tab-boleto.modo-varias .bol-tbl tbody tr.in td{background:inherit!important}
+  .bol-tbl tbody tr.sel td{background:inherit!important;box-shadow:none!important}
+  .bol-tbl tbody tr:nth-child(odd).sel td{background:#fff!important}
+  .bol-tbl tbody tr:nth-child(even).sel td{background:#f6f9fc!important}
+  .bol-tbl{page-break-inside:avoid}
   .admin-lock,.admin-overlay{display:none!important}
 }
 
@@ -411,8 +486,10 @@ input::-webkit-inner-spin-button{opacity:.5}
         <div class="seg" id="c_frete_opts">
           <button class="seg-opt sel" data-v="gratis" onclick="setOpt('c','frete','gratis')">Grátis</button>
           <button class="seg-opt" data-v="combinar" onclick="setOpt('c','frete','combinar')">A combinar</button>
+          <button class="seg-opt" data-v="pago" onclick="setOpt('c','frete','pago')">Pago</button>
           <button class="seg-opt" data-v="" onclick="setOpt('c','frete','')">Não incluir</button>
         </div>
+        <span class="frete-val" id="c_frete_val_w"><span>R$</span><input type="number" id="c_frete_val" min="0" step="10" placeholder="valor" oninput="calcCartao()"></span>
       </div>
       <div class="opt-group">
         <span class="opt-group-label">📦 Entrega</span>
@@ -441,41 +518,47 @@ input::-webkit-inner-spin-button{opacity:.5}
 </div>
 
 <!-- ABA BOLETO -->
-<div id="tab-boleto" class="tab-content">
+<div id="tab-boleto" class="tab-content modo-uma">
+  <!-- 1. PRODUTOS -->
   <div class="section no-print">
     <div class="section-title">📦 Produtos</div>
     <div class="prod-header"><span>Produto</span><span>Valor Unit.</span><span>Qtd</span><span></span></div>
     <div id="b_produtos"></div>
     <div class="actions"><button class="btn-add" onclick="addProd('b')">+ Adicionar Produto</button></div>
   </div>
-  <div class="form-row no-print">
-    <div class="field">
-      <label>🔢 Quantas Vezes (1 a 7)</label>
-      <select id="b_parcelas" onchange="calcBoleto()">
-        <option value="1">1x (30 dias - sem entrada)</option>
-        <option value="2">2x</option><option value="3">3x</option><option value="4">4x</option>
-        <option value="5">5x</option><option value="6">6x</option><option value="7" selected>7x</option>
-      </select>
-    </div>
-    <div class="field" id="b_entrada_field">
-      <label>💵 % Entrada (mínimo 25%)</label>
-      <input type="number" id="b_entrada" value="25" min="25" max="100" step="5" oninput="calcBoleto()">
-      <div class="field-error-msg" id="b_entrada_error">⚠️ Entrada mínima é 25%!</div>
-    </div>
+  <!-- resumo dos produtos: só no impresso -->
+  <div class="section print-section print-only">
+    <div class="section-title">📊 Produtos</div>
+    <table class="desc-table" id="b_resumo"></table>
   </div>
-  <div class="error-banner" id="boleto_error_banner">🚫 Entrada abaixo de 25% não é permitida.</div>
-  <div class="print-cond-title">📑 Pagamento no Boleto</div>
-  <div class="kpis" id="b_kpis"></div>
-  <div class="section no-print">
-    <div class="section-title no-print">📱 Mensagem WhatsApp</div>
-    <div class="opt-groups">
+  <!-- escolhido (impresso, modo "só a escolhida") -->
+  <div class="esc-box" id="b_escolha"></div>
+  <!-- 2. OPÇÕES DE PAGAMENTO -->
+  <div class="section print-section b-cond-sec">
+    <div class="section-title" id="b_cond_title">📋 Opções de Pagamento no Boleto</div>
+    <div class="b-ctrl no-print">
+      <div class="opt-group">
+        <span class="opt-group-label">Mostrar ao cliente</span>
+        <div class="seg" id="b_modo_opts">
+          <button class="seg-opt sel" data-v="uma" onclick="setModoB('uma')">Só a escolhida</button>
+          <button class="seg-opt" data-v="varias" onclick="setModoB('varias')">Escolher várias</button>
+          <button class="seg-opt" data-v="todas" onclick="setModoB('todas')">Todas</button>
+        </div>
+      </div>
+      <div class="ent" id="b_entrada_field">
+        <span class="opt-group-label">💵 Entrada</span>
+        <input type="number" id="b_entrada" value="25" min="25" max="100" step="5" oninput="calcBoleto()"><span class="opt-group-label">%</span>
+        <span class="field-error-msg" id="b_entrada_error">mínimo 25%</span>
+      </div>
       <div class="opt-group">
         <span class="opt-group-label">🚚 Frete</span>
         <div class="seg" id="b_frete_opts">
           <button class="seg-opt sel" data-v="gratis" onclick="setOpt('b','frete','gratis')">Grátis</button>
           <button class="seg-opt" data-v="combinar" onclick="setOpt('b','frete','combinar')">A combinar</button>
+          <button class="seg-opt" data-v="pago" onclick="setOpt('b','frete','pago')">Pago</button>
           <button class="seg-opt" data-v="" onclick="setOpt('b','frete','')">Não incluir</button>
         </div>
+        <span class="frete-val" id="b_frete_val_w"><span>R$</span><input type="number" id="b_frete_val" min="0" step="10" placeholder="valor" oninput="calcBoleto()"></span>
       </div>
       <div class="opt-group">
         <span class="opt-group-label">📦 Entrega</span>
@@ -485,26 +568,34 @@ input::-webkit-inner-spin-button{opacity:.5}
           <button class="seg-opt" data-v="" onclick="setOpt('b','entrega','')">Não incluir</button>
         </div>
       </div>
-      <div class="cond-hint" style="margin-top:0">Vale para a mensagem do WhatsApp e para o impresso.</div>
+      <div class="cond-hint" id="b_modo_hint" style="margin:0;width:100%">Clique numa linha da tabela para escolher o plano.</div>
     </div>
-    <div class="msg" id="b_msg" onclick="copyThis(this)"><span class="copy-badge">📋 COPIAR</span></div>
-  </div>
-  <div class="section print-section">
-    <div class="section-title">📊 Resumo do Orçamento</div>
-    <table class="desc-table" id="b_resumo"></table>
-  </div>
-  <div class="section print-section">
-    <div class="section-title">📋 Condições de Pagamento — Boleto</div>
-    <table class="desc-table" id="descTable"></table>
-    <div id="b_tabela_nota" style="font-size:10px;color:var(--text3);margin-top:8px;font-style:italic"></div>
+    <div class="error-banner" id="boleto_error_banner">🚫 Entrada abaixo de 25% não é permitida.</div>
+    <select id="b_parcelas" onchange="calcBoleto()" style="display:none">
+      <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+      <option value="5">5</option><option value="6">6</option><option value="7" selected>7</option>
+    </select>
+    <table class="bol-tbl" id="descTable"></table>
+    <div id="b_tabela_nota"></div>
     <div class="print-frete-info" id="b_print_frete"></div>
   </div>
+  <div class="print-cond-title"></div>
+  <div class="kpis" id="b_kpis" style="display:none"></div>
+  <!-- 3. WHATSAPP -->
+  <div class="section no-print">
+    <div class="section-title">📱 Para o WhatsApp</div>
+    <div class="img-msg" id="b_imgmsg" onclick="copiarImgB()"><span class="copy-badge" id="b_img_badge">📋 COPIAR IMAGEM</span><img id="b_img" alt="Opções de pagamento"></div>
+    <div class="img-msg-acts"><button type="button" onclick="copyThis(document.getElementById('b_msg'))">📝 Copiar como texto</button><button type="button" id="b_share" style="display:none" onclick="enviarImgB()">📤 Enviar (WhatsApp)</button><span class="img-msg-st" id="b_img_st">Clique na imagem para copiar e cole (Ctrl+V) na conversa do WhatsApp.</span></div>
+    <div class="msg" id="b_msg" onclick="copyThis(this)" style="display:none"><span class="copy-badge">📋 COPIAR</span></div>
+  </div>
+  <!-- 4. FOTOS -->
   <div class="section print-section img-section vazio" id="b_imgSection">
-    <div class="section-title">📷 Imagens do Orçamento</div>
+    <div class="section-title">📷 Fotos do Orçamento</div>
     <input type="file" class="img-input" id="b_imgInput" accept="image/*" multiple onchange="addImages('b',this)">
     <div class="actions"><button class="btn-img no-print" onclick="document.getElementById('b_imgInput').click()">📷 Adicionar Fotos</button></div>
     <div class="img-gallery" id="b_gallery"></div>
   </div>
+  <!-- 5. IMPRIMIR -->
   <div class="actions no-print"><button class="btn-print" onclick="window.print()">🖨️ Imprimir Orçamento</button></div>
 </div>
 
@@ -745,24 +836,27 @@ function addProd(t){prods[t].push({nome:'',valor:0,qtd:1});renderProds(t);}
 function getTotal(t){var s=0;for(var i=0;i<prods[t].length;i++)s+=prods[t][i].valor*(prods[t][i].qtd||1);return s;}
 
 var OPTS={c:{frete:'gratis',entrega:'pronta'},b:{frete:'gratis',entrega:'pronta'}};
-var OPT_TXT={frete:{gratis:'Frete grátis',combinar:'Frete a combinar'},entrega:{pronta:'Pronta entrega',encomenda:'Sob encomenda'}};
+var OPT_TXT={frete:{gratis:'Frete grátis',combinar:'Frete a combinar',pago:'Frete pago'},entrega:{pronta:'Pronta entrega',encomenda:'Sob encomenda'}};
 function setOpt(t,campo,v){
   OPTS[t][campo]=v;
   var bs=document.querySelectorAll('#'+t+'_'+campo+'_opts .seg-opt');
   for(var i=0;i<bs.length;i++)bs[i].classList.toggle('sel',bs[i].getAttribute('data-v')===v);
+  if(campo==='frete'){var w=document.getElementById(t+'_frete_val_w');if(w){w.style.display=v==='pago'?'inline-flex':'none';if(v==='pago')setTimeout(function(){document.getElementById(t+'_frete_val').focus();},30);}}
   if(t==='c')calcCartao();else calcBoleto();
 }
+function freteV(t){if(OPTS[t].frete!=='pago')return 0;var e=document.getElementById(t+'_frete_val');var v=parseFloat(String(e&&e.value||'').replace(',','.'));return v>0?v:0;}
+function freteTxt(t){if(OPTS[t].frete!=='pago')return OPT_TXT.frete[OPTS[t].frete];var v=freteV(t);return v?'Frete: '+R$(v)+' (já somado nos valores)':'Frete pago (valor a informar)';}
 function extrasStr(t){
   var s='';
   if(OPTS[t].entrega)s+='\n👉 *'+OPT_TXT.entrega[OPTS[t].entrega]+'*';
-  if(OPTS[t].frete)s+='\n👉 *'+OPT_TXT.frete[OPTS[t].frete]+'*';
+  if(OPTS[t].frete&&!(t==='b'&&freteV('b')&&B_MODO==='uma'))s+='\n👉 *'+freteTxt(t)+'*';
   return s?'\n'+s:'';
 }
 function updatePrintFrete(t){
   var el=document.getElementById(t+'_print_frete');
   if(!el)return;
   var p=[];
-  if(OPTS[t].frete)p.push('<span><strong>🚚 Frete:</strong> '+OPT_TXT.frete[OPTS[t].frete].replace('Frete ','').replace(/^./,function(c){return c.toUpperCase();})+'</span>');
+  if(OPTS[t].frete)p.push('<span><strong>🚚 Frete:</strong> '+(OPTS[t].frete==='pago'?(freteV(t)?R$(freteV(t))+' (já somado nos valores)':'a informar'):OPT_TXT.frete[OPTS[t].frete].replace('Frete ','').replace(/^./,function(c){return c.toUpperCase();}))+'</span>');
   if(OPTS[t].entrega)p.push('<span><strong>📦 Entrega:</strong> '+OPT_TXT.entrega[OPTS[t].entrega]+'</span>');
   el.innerHTML=p.join('');
   el.classList.toggle('vazio',p.length===0);
@@ -798,8 +892,9 @@ function updateCondChips(s21){
 function calcCartao(){
   var total=getTotal('c');
   var dv=CFG.dVista/100, d6=CFG.d6/100, d12=CFG.d12/100;
-  var v12=total*(1-d12),v6=total*(1-d6),vV=total*(1-dv);
-  var p12=Math.ceil(v12/12),p6=Math.ceil(v6/6),p21=Math.floor(total/21);
+  var fr=freteV('c');   // frete sem desconto, somado e dividido nas parcelas
+  var v12=total*(1-d12)+fr,v6=total*(1-d6)+fr,vV=total*(1-dv)+fr;
+  var p12=Math.ceil(v12/12),p6=Math.ceil(v6/6),p21=Math.floor((total+fr)/21);
   var s21=total>=CFG.min21;
   var sh={v:C_SHOW.v,'6':C_SHOW['6'],'12':C_SHOW['12'],'21':C_SHOW['21']&&s21};
   updateCondChips(s21);
@@ -853,8 +948,10 @@ function calcCartao(){
         +'</tr>';
     }
   }
-  if(multi){
-    th+='<tr style="font-weight:700"><td style="text-align:left">TOTAL</td><td></td><td>'+R$(total)+'</td>'
+  if(fr){var nc=(sh.v?1:0)+(sh['6']?1:0)+(sh['12']?1:0)+(sh['21']?1:0);
+    th+='<tr><td style="text-align:left">🚚 Frete</td><td></td><td>'+R$(fr)+'</td>'+(nc?'<td colspan="'+nc+'" style="color:#666">incluído no total abaixo</td>':'')+'</tr>';}
+  if(multi||fr){
+    th+='<tr style="font-weight:700"><td style="text-align:left">TOTAL</td><td></td><td>'+R$(total+fr)+'</td>'
       +(sh.v?'<td>'+R$(Math.ceil(vV))+'</td>':'')
       +(sh['6']?cel6(p6,6):'')+(sh['12']?cel6(p12,12):'')+(sh['21']?cel6(p21,21):'')
       +'</tr>';
@@ -862,6 +959,96 @@ function calcCartao(){
   th+='</tbody>';document.getElementById('c_resumo').innerHTML=th;
 }
 
+var B_MODO='uma',B_SET={},B_CANVAS=null,LOGO_IMG=null;
+(function(){var src=(document.querySelector('.header img')||{}).src;if(!src)return;var im=new Image();im.onload=function(){LOGO_IMG=im;try{calcBoleto();}catch(e){}};im.src=src;})();
+function setModoB(m){B_MODO=m;document.querySelectorAll('#b_modo_opts .seg-opt').forEach(function(b){b.classList.toggle('sel',b.getAttribute('data-v')===m);});
+  var t=document.getElementById('tab-boleto');['uma','varias','todas'].forEach(function(k){t.classList.toggle('modo-'+k,k===m);});
+  if(m==='varias'&&!Object.keys(B_SET).length)B_SET[parseInt(document.getElementById('b_parcelas').value)||1]=1;
+  document.getElementById('b_modo_hint').textContent=m==='varias'?'Marque na tabela as opções que quer mostrar ao cliente.':m==='todas'?'O cliente recebe os 7 planos. Clique numa linha para definir o plano dos cartões de cima.':'Clique numa linha da tabela "Condições de Pagamento" para escolher o plano.';
+  calcBoleto();}
+function escolherPlanoB(i){
+  if(B_MODO==='varias'){if(B_SET[i])delete B_SET[i];else B_SET[i]=1;return calcBoleto();}
+  var s=document.getElementById('b_parcelas');s.value=String(i);if(i>1){var e=document.getElementById('b_entrada');if((parseFloat(e.value)||0)<CFG.entMin)e.value=CFG.entMin;}calcBoleto();}
+function planosB(total,pe){var out=[],maxN=Object.keys(CFG.b).length,fr=freteV('b');
+  for(var i=1;i<=maxN;i++){var d=(CFG.b[i]||0)/100,vf=total-total*d,eb=i===1?0:Math.floor(total*pe),np=i===1?1:i-1,p=Math.round((vf-eb)/np);
+    // frete sem desconto: no 30 dias soma no pagamento único; nos parcelados soma na entrada
+    out.push({i:i,plano:i===1?'30 dias':i+'x boleto',desc:CFG.b[i]||0,dval:total*d,vf:vf+(i===1?fr:0),et:i===1?0:eb+fr,np:np,p:p,tot:i===1?vf+fr:eb+fr+p*np});}
+  return out;}
+function listaB(todos,n){
+  if(B_MODO==='todas')return todos;
+  if(B_MODO==='varias'){var l=todos.filter(function(x){return B_SET[x.i];});return l.length?l:todos.filter(function(x){return x.i===n;});}
+  return todos.filter(function(x){return x.i===n;});}
+function desenharBoleto(lista,total){
+  var cli=(document.getElementById('cliNome').value||'').trim(),vend=(document.getElementById('vendNome').value||'').trim(),cel=(document.getElementById('vendCel').value||'').trim();
+  var val=((document.getElementById('printValidade')||{}).textContent||'').trim();
+  var itens=prods.b.filter(function(p){return p.valor*(p.qtd||1)>0;});
+  var ex=[];if(OPTS.b.frete&&!freteV('b'))ex.push('🚚 '+freteTxt('b'));if(OPTS.b.entrega)ex.push('📦 '+OPT_TXT.entrega[OPTS.b.entrega]);
+  var W=760,S=2,pad=30,F='Arial, Helvetica, sans-serif';
+  var H=150+(cli?22:0)+itens.length*28+100+(freteV('b')?88:0)+lista.length*46+(ex.length?34:10)+72;
+  var cv=document.createElement('canvas');cv.width=W*S;cv.height=H*S;var g=cv.getContext('2d');g.scale(S,S);
+  function txt(t,x,y,size,cor,peso,al){g.font=(peso||'normal')+' '+size+'px '+F;g.fillStyle=cor||'#0f172a';g.textAlign=al||'left';g.textBaseline='alphabetic';g.fillText(t,x,y);}
+  function fit(t,max,size,peso){g.font=(peso||'normal')+' '+size+'px '+F;if(g.measureText(t).width<=max)return t;while(t.length>3&&g.measureText(t+'…').width>max)t=t.slice(0,-1);return t+'…';}
+  g.fillStyle='#ffffff';g.fillRect(0,0,W,H);
+  var y=pad,tx=pad;
+  if(LOGO_IMG){var lh=52,lw=LOGO_IMG.width*lh/LOGO_IMG.height;g.drawImage(LOGO_IMG,pad,y,lw,lh);tx=pad+lw+16;}
+  txt('Peso Certo Equipamentos Comerciais',tx,y+22,17,'#0f2a4a','bold');
+  txt('Av. Presidente Kennedy, 3172 — Ano Bom, Barra Mansa/RJ',tx,y+40,11,'#555');
+  txt('pesocertoequipamentos.com.br · (24) 3323-5328',tx,y+54,11,'#555');
+  txt(new Date().toLocaleDateString('pt-BR'),W-pad,y+22,11,'#555',null,'right');
+  if(val&&val!=='—'&&!/não informada/i.test(val))txt('Validade: '+val,W-pad,y+38,11,'#c00',null,'right');
+  y+=68;g.fillStyle='#6DB6D9';g.fillRect(pad,y,W-2*pad,3);y+=36;
+  txt(lista.length===1?'Condição de pagamento no boleto':'Opções de pagamento no boleto',pad,y,22,'#0f2a4a','bold');
+  if(cli){y+=22;txt('Para: '+fit(cli,W-2*pad-40,13,'bold'),pad,y,13,'#555','bold');}
+  y+=16;
+  itens.forEach(function(p,k){var q=p.qtd||1;y+=28;txt(fit((q>1?q+'× ':'')+(p.nome||'Produto '+(k+1)),W-2*pad-150,14),pad,y,14,'#1f2937');txt(R$(p.valor*q),W-pad,y,14,'#0f172a','bold','right');});
+  y+=14;g.fillStyle='#dde4f0';g.fillRect(pad,y,W-2*pad,1);y+=24;
+  var frI=freteV('b');
+  if(frI){
+    txt('Valor dos produtos',pad,y,14,'#1f2937');txt(R$(total),W-pad,y,14,'#0f172a',null,'right');
+    y+=24;txt('Frete',pad,y,14,'#1f2937');txt('+ '+R$(frI),W-pad,y,14,'#0f172a',null,'right');
+    y+=12;g.fillStyle='#dde4f0';g.fillRect(pad,y,W-2*pad,1);y+=26;
+    txt('Valor total (produtos + frete)',pad,y,16,'#0f2a4a','bold');txt(R$(total+frI),W-pad,y,16,'#0f2a4a','bold','right');
+    y+=26;txt('Descontos no boleto (sobre os produtos; frete cobrado na entrada):',pad,y,12,'#555');
+  } else {
+    txt('Valor de tabela',pad,y,14,'#0f172a','bold');txt(R$(total),W-pad,y,14,'#0f172a','bold','right');
+  }
+  y+=22;var cols=[pad+12,pad+205,pad+320,pad+465,W-pad-12],tw=W-2*pad,y0=y;
+  g.fillStyle='#0f2a4a';g.fillRect(pad,y,tw,40);
+  txt('Plano',cols[0],y+26,13,'#fff','bold');txt('Desconto',cols[1],y+26,13,'#fff','bold','center');txt(frI?'Entrada + frete':'Entrada',cols[2],y+26,13,'#fff','bold','center');txt('Parcelas',cols[3],y+26,13,'#fff','bold','center');txt('Total',cols[4],y+26,13,'#fff','bold','right');
+  y+=40;
+  lista.forEach(function(x,k){g.fillStyle=lista.length===1?'#ecfdf3':(k%2?'#f6f9fc':'#ffffff');g.fillRect(pad,y,tw,46);
+    txt(x.plano,cols[0],y+29,15,'#0f2a4a','bold');txt(pct(x.desc),cols[1],y+29,14,'#15803d','bold','center');
+    txt(x.i===1?'—':R$(x.et),cols[2],y+29,14,'#1f2937',null,'center');txt(x.i===1?'1x de '+R$(x.vf):x.np+'x de '+R$(x.p),cols[3],y+29,14,'#0f172a','bold','center');
+    txt(R$(x.tot),cols[4],y+29,15,'#0f2a4a','bold','right');y+=46;});
+  g.strokeStyle='#dde4f0';g.lineWidth=1;g.strokeRect(pad+.5,y0+.5,tw-1,y-y0-1);
+  if(ex.length){y+=34;txt(ex.join('   ·   '),pad,y,14,'#15803d','bold');}else y+=10;
+  y+=20;g.fillStyle='#dde4f0';g.fillRect(pad,y,W-2*pad,1);y+=26;
+  txt(vend?'Vendedor: '+vend+(cel?' · '+cel:''):'Fale com a gente: (24) 3323-5328',pad,y,13,'#1f2937','bold');
+  return cv;
+}
+var _imgT=null;
+function renderImgB(lista,total){clearTimeout(_imgT);_imgT=setTimeout(function(){
+  var box=document.getElementById('b_imgmsg');
+  if(!(total>0)){B_CANVAS=null;box.style.display='none';document.getElementById('b_img_st').textContent='Coloque o produto e o valor para gerar a imagem.';return;}
+  B_CANVAS=desenharBoleto(lista,total);box.style.display='';
+  document.getElementById('b_img').src=B_CANVAS.toDataURL('image/png');
+  var mob=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent);document.getElementById('b_share').style.display=mob&&navigator.canShare?'':'none';
+},120);}
+function blobB(){return new Promise(function(res){B_CANVAS.toBlob(res,'image/png');});}
+function nomeImgB(){var cli=(document.getElementById('cliNome').value||'').trim();return 'orcamento-boleto'+(cli?'-'+cli.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').slice(0,30):'')+'.png';}
+function copiarImgB(){
+  if(!B_CANVAS)return;var st=document.getElementById('b_img_st'),bd=document.getElementById('b_img_badge'),box=document.getElementById('b_imgmsg');
+  try{registrarOrc('b');}catch(e){}
+  var mob=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent),dica=mob?'Segure o dedo na imagem e escolha "Copiar" (ou use 📤 Enviar).':'Clique com o botão direito na imagem e escolha "Copiar imagem".';
+  if(!(navigator.clipboard&&window.ClipboardItem)){st.textContent=dica;return;}
+  navigator.clipboard.write([new ClipboardItem({'image/png':blobB()})]).then(function(){
+    box.classList.add('copied');bd.textContent='✅ COPIADA!';st.textContent='Imagem copiada — cole (Ctrl+V) na conversa do WhatsApp.';
+    setTimeout(function(){box.classList.remove('copied');bd.textContent='📋 COPIAR IMAGEM';},2500);
+  }).catch(function(){st.textContent=dica;});
+}
+function enviarImgB(){if(!B_CANVAS)return;try{registrarOrc('b');}catch(e){}
+  blobB().then(function(b){var f=new File([b],nomeImgB(),{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:'Orçamento Peso Certo'}).catch(function(){});
+    else document.getElementById('b_img_st').textContent='Este celular não permite enviar direto — segure o dedo na imagem e copie.';});}
 function calcBoleto(){
   var total=getTotal('b');
   var vend=document.getElementById('vendNome').value.trim();
@@ -872,7 +1059,7 @@ function calcBoleto(){
   var eE=document.getElementById('b_entrada_error'),ban=document.getElementById('boleto_error_banner'),mE=document.getElementById('b_msg');
 
   if(n===1){
-    eI.disabled=true;eI.value='0';pctE=0;
+    pctE=0;
     eF.classList.remove('error');eI.classList.remove('input-error');eE.classList.remove('show');ban.classList.remove('show');mE.classList.remove('disabled');
   } else {
     eI.disabled=false;
@@ -880,12 +1067,15 @@ function calcBoleto(){
       eF.classList.add('error');eI.classList.add('input-error');eE.classList.add('show');ban.classList.add('show');mE.classList.add('disabled');
       document.getElementById('b_kpis').innerHTML='<div class="kpi" style="grid-column:1/-1;border-color:rgba(239,68,68,.3)"><div class="kpi-label" style="color:var(--red)">⚠️ Erro</div><div class="kpi-val c-red" style="font-size:14px">Entrada mínima '+CFG.entMin+'%</div></div>';
       setMsg('b_msg','⚠️ Ajuste para mínimo '+CFG.entMin+'%.');
+      renderImgB([],0);
       return;
     }
     eF.classList.remove('error');eI.classList.remove('input-error');eE.classList.remove('show');ban.classList.remove('show');mE.classList.remove('disabled');
   }
 
   var pe=pctE/100;
+  var peTab=n===1?Math.max(CFG.entMin,parseFloat(eI.value)||CFG.entMin)/100:pe;
+  var fr=freteV('b');   // na tabela/mensagem de todas as opções, 30 dias não zera a entrada dos outros planos
   var desc=(CFG.b[n]||0)/100;
   var dv=total*desc;
   var fin=total-dv;                          // valor com desconto
@@ -894,9 +1084,9 @@ function calcBoleto(){
   var nP=n===1?1:n-1;
   var parc=nP>0?rest/nP:rest;
 
-  var entReal = n===1 ? 0 : ent;
+  var entReal = n===1 ? 0 : ent+fr;          // frete entra na entrada
   var parcReal = Math.round(parc);
-  var totalEfetivo = n===1 ? fin : entReal + parcReal*nP;
+  var totalEfetivo = n===1 ? fin+fr : entReal + parcReal*nP;
 
   document.getElementById('b_kpis').innerHTML=
     '<div class="kpi"><div class="kpi-label">Valor c/ Desconto</div><div class="kpi-val c-blue">'+R$(fin)+'</div><div class="kpi-sub">economia: '+R$(dv)+'</div></div>'+
@@ -912,12 +1102,31 @@ function calcBoleto(){
   var msgB='*Pagamento no Boleto* 📑';
   if(vend){msgB+='\n_Vendedor: '+vend;if(cel)msgB+=' | '+cel;msgB+='_';}
   msgB+='\n\n'+pl+(multi?'\n\n💰 *Valor:* ~'+R$(total)+'~':'');
+  if(fr)msgB+='\n🚚 *Frete:* '+R$(fr)+'\n💰 *Valor total (produtos + frete):* '+R$(total+fr)+'\n';
   msgB+='\n🏷️ *Desconto:* '+(CFG.b[n]||0)+'% → '+R$(dv);
-  msgB+='\n✅ *Valor Final:* '+R$(fin)+'\n';
-  if(n===1)msgB+='\n📌 *Pagamento em 30 dias:* '+R$(fin);
-  else msgB+='\n📌 *Entrada ('+pctE+'% do valor bruto):* '+R$(ent)+'\n📌 *'+nP+' parcela'+(nP>1?'s':'')+' de:* '+R$(Math.round(parc));
+  msgB+='\n✅ *'+(fr?'Produtos com desconto':'Valor Final')+':* '+R$(fin)+'\n';
+  if(fr)msgB+='💰 *Total a pagar:* '+R$(totalEfetivo)+(n>1?' (frete na entrada)':'')+'\n';
+  if(n===1)msgB+='\n📌 *Pagamento em 30 dias:* '+R$(fin+fr);
+  else msgB+='\n📌 *Entrada:* '+R$(ent+fr)+'\n📌 *'+nP+' parcela'+(nP>1?'s':'')+' de:* '+R$(Math.round(parc));
+  var todosB=planosB(total,peTab),listaMsg=listaB(todosB,n);
+  if(B_MODO!=='uma'&&listaMsg.length>1){
+    msgB='*Opções de pagamento no Boleto* 📑';
+    if(vend){msgB+='\n_Vendedor: '+vend;if(cel)msgB+=' | '+cel;msgB+='_';}
+    msgB+='\n\n'+pl+'\n'+(fr?'🚚 *Frete:* '+R$(fr)+'\n💰 *Valor total (produtos + frete):* '+R$(total+fr)+'\n_Desconto sobre os produtos; frete cobrado na entrada._\n':'');
+    listaMsg.forEach(function(x){
+      msgB+='\n📌 *'+x.plano+'* ('+pct(x.desc)+' desc.): '+(x.i===1?R$(x.vf)+' em 30 dias':'entrada '+R$(x.et)+' + '+x.np+'x de '+R$(x.p))+' → total '+R$(x.tot);
+    });
+  }
   msgB+=extrasStr('b');
   setMsg('b_msg',msgB);
+  document.getElementById('b_escolha').innerHTML='<div class="esc-l">✅ Condição de pagamento escolhida</div>'
+    +'<div class="esc-plano">'+(n===1?'Boleto para 30 dias':n+'x no boleto')+'</div>'
+    +'<div class="esc-linhas">'+(n===1?'<div>Pagamento único de <b>'+R$(fin+fr)+'</b></div><div>sem entrada</div>'
+      :'<div>Entrada de <b>'+R$(entReal)+'</b></div><div>+ '+nP+' parcela'+(nP>1?'s':'')+' de <b>'+R$(parcReal)+'</b></div>')+'</div>'
+    +'<div class="esc-tot">Total: <b>'+R$(totalEfetivo)+'</b><span>'+(fr?'Produtos '+R$(total)+' + frete '+R$(fr)+' = '+R$(total+fr)+' · ':'Valor de tabela '+R$(total)+' · ')+'desconto de '+pct(CFG.b[n]||0)+' sobre os produtos (economia de '+R$(dv)+')'+(fr&&n>1?' · frete cobrado na entrada':'')+'</span></div>'
+    +((OPTS.b.frete||OPTS.b.entrega)?'<div class="esc-ex">'+[OPTS.b.frete?'🚚 '+freteTxt('b'):'',OPTS.b.entrega?'📦 '+OPT_TXT.entrega[OPTS.b.entrega]:''].filter(String).join(' &nbsp;·&nbsp; ')+'</div>':'');
+  document.getElementById('b_cond_title').textContent=B_MODO==='uma'?'📋 Condições de Pagamento — Boleto':'📋 Opções de Pagamento no Boleto';
+  renderImgB(listaMsg,total);
   updatePrintFrete('b');
 
   // Resumo produtos para impressão
@@ -934,37 +1143,16 @@ function calcBoleto(){
   sumHtml+='</tbody>';
   document.getElementById('b_resumo').innerHTML=sumHtml;
 
-  // Tabela de descontos — todas as linhas, só selecionada aparece no print
-  var maxN = Object.keys(CFG.b).length;
-  var th='<thead><tr>'
-    +'<th>Plano</th>'
-    +'<th>Desconto</th>'
-    +'<th>Valor c/ Desc.</th>'
-    +'<th>Entrada</th>'
-    +'<th>Parcelas</th>'
-    +'<th>Total Efetivo Pago</th>'
-    +'</tr></thead><tbody>';
-  for(var i=1;i<=maxN;i++){
-    var d=(CFG.b[i]||0)/100;
-    var vf=total-total*d;
-    var dval=total*d;
-    var et=i===1?0:Math.floor(total*pe);
-    var r=vf-et;
-    var np=i===1?1:i-1;
-    var p=np>0?r/np:r;
-    var pArred=Math.round(p);
-    var totalEf=i===1?vf:et+pArred*np;
-    var isSel=i===n;
-    var plano=i===1?'30 dias':i+'x boleto';
-    th+='<tr class="'+(isSel?'sel':'')+'">'
-      +'<td>'+plano+(isSel?'<span class="sel-badge">✅ Selecionado</span>':'')+'</td>'
-      +'<td>'+pct(CFG.b[i]||0)+'<span class="td-total">'+R$(dval)+'</span></td>'
-      +'<td>'+R$(vf)+'</td>'
-      +'<td>'+(i===1?'—':R$(et))+'</td>'
-      +'<td class="td-price">'+(i===1?'—':np+'x de '+R$(pArred))+'</td>'
-      +'<td style="font-weight:700;color:var('+(isSel?'--green':'--text2')+')">'+R$(totalEf)+'</td>'
-      +'</tr>';
-  }
+  // Tabela de opções — mesmo visual da imagem; clique na linha escolhe o plano
+  var th='<thead><tr><th>Plano</th><th>Desconto</th><th>'+(fr?'Entrada + frete':'Entrada')+'</th><th>Parcelas</th><th class="r">Total</th></tr></thead><tbody>';
+  var inSet={};listaMsg.forEach(function(x){inSet[x.i]=1;});
+  todosB.forEach(function(x){var isSel=x.i===n;
+    th+='<tr class="'+(isSel?'sel ':'')+(inSet[x.i]?'in':'')+'" onclick="escolherPlanoB('+x.i+')" title="'+(B_MODO==='varias'?'Clique para marcar/desmarcar':'Clique para escolher este plano')+'">'
+      +'<td class="pl"><span class="rd"></span><span class="ck"></span>'+x.plano+(isSel?'<span class="sel-badge">✓ Escolhida</span>':'')+'</td>'
+      +'<td class="ds">'+pct(x.desc)+'</td>'
+      +'<td>'+(x.i===1?'—':R$(x.et))+'</td>'
+      +'<td class="pc">'+(x.i===1?'1x de '+R$(x.vf):x.np+'x de '+R$(x.p))+'</td>'
+      +'<td class="r tt">'+R$(x.tot)+'</td></tr>';});
   th+='</tbody>';
   document.getElementById('descTable').innerHTML=th;
 
@@ -973,7 +1161,7 @@ function calcBoleto(){
   if(notaEl){
     if(n>1){
       var diff=Math.abs(fin-totalEfetivo);
-      notaEl.innerHTML='* "Total Efetivo Pago" = entrada + parcelas arredondadas. '+(diff>0?'Diferença de '+R$(diff)+' em relação ao valor com desconto por arredondamento das parcelas.':'Sem diferença de arredondamento.');
+      notaEl.innerHTML='* "Total" = entrada + parcelas arredondadas (só você vê esta nota). '+(diff>0?'Diferença de '+R$(diff)+' em relação ao valor com desconto por arredondamento das parcelas.':'Sem diferença de arredondamento.');
     } else {
       notaEl.innerHTML='* Pagamento único em 30 dias, sem entrada.';
     }
