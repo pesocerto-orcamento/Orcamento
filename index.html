@@ -503,25 +503,25 @@ input::-webkit-inner-spin-button{opacity:.5}
   </div>
   <div class="print-cond-title">💳 Condições de Pagamento</div>
   <div class="kpis" id="c_kpis"></div>
-  <!-- 3. WHATSAPP -->
-  <div class="section no-print">
-    <div class="section-title">📱 Para o WhatsApp</div>
-    <div class="img-msg" id="c_imgmsg" onclick="copiarImg('c')"><span class="copy-badge" id="c_img_badge">📋 COPIAR IMAGEM</span><img id="c_img" alt="Condições de pagamento"></div>
-    <div class="img-msg-acts"><button type="button" onclick="copiarTexto('c',this)">📝 Copiar como texto</button><button type="button" id="c_share" style="display:none" onclick="enviarImg('c')">📤 Enviar (WhatsApp)</button><span class="img-msg-st" id="c_img_st">Clique na imagem para copiar e cole (Ctrl+V) na conversa do WhatsApp.</span></div>
-    <div class="msg" id="c_msg" onclick="copyThis(this)" style="display:none"><span class="copy-badge">📋 COPIAR</span></div>
-  </div>
   <!-- resumo dos produtos: só no impresso -->
   <div class="section print-section print-only">
     <div class="section-title">📊 Resumo do Orçamento</div>
     <table class="desc-table" id="c_resumo"></table>
     <div class="print-frete-info" id="c_print_frete"></div>
   </div>
-  <!-- 4. FOTOS -->
+  <!-- 3. FOTOS (entram na imagem do WhatsApp) -->
   <div class="section print-section img-section vazio" id="c_imgSection">
-    <div class="section-title">📷 Fotos do Orçamento</div>
+    <div class="section-title">📷 Fotos do Produto <small style="font-weight:600;color:var(--text3)">— até 3 entram na imagem do WhatsApp</small></div>
     <input type="file" class="img-input" id="c_imgInput" accept="image/*" multiple onchange="addImages('c',this)">
     <div class="actions"><button class="btn-img no-print" onclick="document.getElementById('c_imgInput').click()">📷 Adicionar Fotos</button></div>
     <div class="img-gallery" id="c_gallery"></div>
+  </div>
+  <!-- 4. WHATSAPP -->
+  <div class="section no-print">
+    <div class="section-title">📱 Para o WhatsApp</div>
+    <div class="img-msg" id="c_imgmsg" onclick="copiarImg('c')"><span class="copy-badge" id="c_img_badge">📋 COPIAR IMAGEM</span><img id="c_img" alt="Condições de pagamento"></div>
+    <div class="img-msg-acts"><button type="button" onclick="copiarTexto('c',this)">📝 Copiar como texto</button><button type="button" id="c_share" style="display:none" onclick="enviarImg('c')">📤 Enviar (WhatsApp)</button><span class="img-msg-st" id="c_img_st">Clique na imagem para copiar e cole (Ctrl+V) na conversa do WhatsApp.</span></div>
+    <div class="msg" id="c_msg" onclick="copyThis(this)" style="display:none"><span class="copy-badge">📋 COPIAR</span></div>
   </div>
   <!-- 5. IMPRIMIR -->
   <div class="actions no-print"><button class="btn-print" onclick="window.print()">🖨️ Imprimir Orçamento</button></div>
@@ -591,19 +591,19 @@ input::-webkit-inner-spin-button{opacity:.5}
   </div>
   <div class="print-cond-title"></div>
   <div class="kpis" id="b_kpis" style="display:none"></div>
-  <!-- 3. WHATSAPP -->
+  <!-- 3. FOTOS (entram na imagem do WhatsApp) -->
+  <div class="section print-section img-section vazio" id="b_imgSection">
+    <div class="section-title">📷 Fotos do Produto <small style="font-weight:600;color:var(--text3)">— até 3 entram na imagem do WhatsApp</small></div>
+    <input type="file" class="img-input" id="b_imgInput" accept="image/*" multiple onchange="addImages('b',this)">
+    <div class="actions"><button class="btn-img no-print" onclick="document.getElementById('b_imgInput').click()">📷 Adicionar Fotos</button></div>
+    <div class="img-gallery" id="b_gallery"></div>
+  </div>
+  <!-- 4. WHATSAPP -->
   <div class="section no-print">
     <div class="section-title">📱 Para o WhatsApp</div>
     <div class="img-msg" id="b_imgmsg" onclick="copiarImg('b')"><span class="copy-badge" id="b_img_badge">📋 COPIAR IMAGEM</span><img id="b_img" alt="Opções de pagamento"></div>
     <div class="img-msg-acts"><button type="button" onclick="copiarTexto('b',this)">📝 Copiar como texto</button><button type="button" id="b_share" style="display:none" onclick="enviarImg('b')">📤 Enviar (WhatsApp)</button><span class="img-msg-st" id="b_img_st">Clique na imagem para copiar e cole (Ctrl+V) na conversa do WhatsApp.</span></div>
     <div class="msg" id="b_msg" onclick="copyThis(this)" style="display:none"><span class="copy-badge">📋 COPIAR</span></div>
-  </div>
-  <!-- 4. FOTOS -->
-  <div class="section print-section img-section vazio" id="b_imgSection">
-    <div class="section-title">📷 Fotos do Orçamento</div>
-    <input type="file" class="img-input" id="b_imgInput" accept="image/*" multiple onchange="addImages('b',this)">
-    <div class="actions"><button class="btn-img no-print" onclick="document.getElementById('b_imgInput').click()">📷 Adicionar Fotos</button></div>
-    <div class="img-gallery" id="b_gallery"></div>
   </div>
   <!-- 5. IMPRIMIR -->
   <div class="actions no-print"><button class="btn-print" onclick="window.print()">🖨️ Imprimir Orçamento</button></div>
@@ -791,7 +791,15 @@ function renderGallery(t){
   }
   document.getElementById(t+'_gallery').innerHTML=h;
   var sec=document.getElementById(t+'_imgSection');if(sec)sec.classList.toggle('vazio',imgs[t].length===0);
+  carregarFotos(t);
 }
+var FOTO_OBJ={};
+function carregarFotos(t){
+  var pend=0;
+  imgs[t].forEach(function(src){if(FOTO_OBJ[src])return;pend++;var im=new Image();im.onload=function(){FOTO_OBJ[src]=im;if(--pend===0)redesenhar(t);};im.onerror=function(){if(--pend===0)redesenhar(t);};im.src=src;});
+  if(!pend)redesenhar(t);
+}
+function redesenhar(t){try{if(t==='c')calcCartao();else calcBoleto();}catch(e){}}
 
 /* PRODS */
 function renderProds(t){
@@ -1012,7 +1020,9 @@ function desenharOrc(cfg){
     if(ls.length>3){ls=ls.slice(0,3);while(ls[2].length>3&&mc.measureText(ls[2]+'…').width>max)ls[2]=ls[2].slice(0,-1);ls[2]+='…';}return ls;}
   var linhasIt=itens.map(function(p,k){var q=p.qtd||1;return quebra((q>1?q+'× ':'')+(p.nome||'Produto '+(k+1)),760-60-170);});
   var extraIt=linhasIt.reduce(function(a,l){return a+(l.length-1)*19;},0);
-  var H=150+(cli?22:0)+itens.length*28+extraIt+100+(frI?88:0)+rows.length*46+(ex.length?34:10)+72;
+  var fotos=(imgs[t]||[]).map(function(s_){return FOTO_OBJ[s_];}).filter(Boolean).slice(0,3);
+  var fotoH=fotos.length===1?300:fotos.length?220:0;
+  var H=150+(cli?22:0)+(fotoH?fotoH+20:0)+itens.length*28+extraIt+100+(frI?88:0)+rows.length*46+(ex.length?34:10)+72;
   var cv=document.createElement('canvas');cv.width=W*S;cv.height=H*S;var g=cv.getContext('2d');g.scale(S,S);
   function txt(s_,x,y,size,cor,peso,al){g.font=(peso||'normal')+' '+size+'px '+F;g.fillStyle=cor||'#0f172a';g.textAlign=al||'left';g.textBaseline='alphabetic';g.fillText(s_,x,y);}
   function fit(s_,max,size,peso){g.font=(peso||'normal')+' '+size+'px '+F;if(g.measureText(s_).width<=max)return s_;while(s_.length>3&&g.measureText(s_+'…').width>max)s_=s_.slice(0,-1);return s_+'…';}
@@ -1028,6 +1038,13 @@ function desenharOrc(cfg){
   txt(cfg.titulo,pad,y,22,'#0f2a4a','bold');
   if(cli){y+=22;txt('Para: '+fit(cli,W-2*pad-40,13,'bold'),pad,y,13,'#555','bold');}
   y+=16;
+  if(fotos.length){
+    y+=8;var gap=12,bw=(W-2*pad-gap*(fotos.length-1))/fotos.length;
+    fotos.forEach(function(im,k){var bx=pad+k*(bw+gap),by=y;
+      g.save();g.beginPath();if(g.roundRect)g.roundRect(bx,by,bw,fotoH,10);else g.rect(bx,by,bw,fotoH);g.fillStyle='#f3f6fb';g.fill();g.clip();
+      var sc=Math.min(bw/im.width,fotoH/im.height),iw=im.width*sc,ih=im.height*sc;g.drawImage(im,bx+(bw-iw)/2,by+(fotoH-ih)/2,iw,ih);g.restore();});
+    y+=fotoH+12;
+  }
   itens.forEach(function(p,k){var q=p.qtd||1;y+=28;txt(R$(p.valor*q),W-pad,y,14,'#0f172a','bold','right');
     linhasIt[k].forEach(function(l,m){if(m)y+=19;txt(l,pad,y,14,'#1f2937');});});
   y+=14;g.fillStyle='#dde4f0';g.fillRect(pad,y,W-2*pad,1);y+=24;
