@@ -503,6 +503,11 @@ input::-webkit-inner-spin-button{opacity:.5}
           <button class="seg-opt" data-v="" onclick="setOpt('c','entrega','')">Não incluir</button>
         </div>
       </div>
+      <div class="ent">
+        <span class="opt-group-label">💵 Entrada (PIX/dinheiro) — quanto abate do valor</span><span class="opt-group-label">R$</span>
+        <input type="number" id="c_entrada" min="0" step="100" placeholder="0" style="width:110px" oninput="calcCartao()">
+        <span class="field-error-msg" id="c_ent_msg" style="display:inline"></span>
+      </div>
       <div class="cond-hint" id="c_cond_hint" style="margin:0;width:100%">Clique nas condições para ligar/desligar. Vale para a imagem, o texto e o impresso.</div>
     </div>
   </div>
@@ -657,6 +662,7 @@ input::-webkit-inner-spin-button{opacity:.5}
           <div class="admin-section-title">💳 Cartão / PIX</div>
           <div class="admin-grid">
             <div class="admin-field"><label>% Desconto À Vista</label><input type="number" id="cfg_dVista" step="0.5" min="0" max="50"></div>
+            <div class="admin-field"><label>% Desconto da Entrada (cartão)</label><input type="number" id="cfg_dEntrada" step="0.5" min="0" max="50"></div>
             <div class="admin-field"><label>% Desconto 6x Cartão</label><input type="number" id="cfg_d6" step="0.5" min="0" max="50"></div>
             <div class="admin-field"><label>% Desconto 12x Cartão</label><input type="number" id="cfg_d12" step="0.5" min="0" max="50"></div>
             <div class="admin-field"><label>Valor Mínimo p/ 21x (R$)</label><input type="number" id="cfg_min21" step="100" min="0"></div>
@@ -713,7 +719,7 @@ input::-webkit-inner-spin-button{opacity:.5}
 <script>
 // ============ CONFIGURAÇÕES (editáveis pelo Admin) ============
 var CFG = {
-  dVista: 18.5, d6: 12, d12: 8, min21: 5000,
+  dVista: 18.5, dEntrada: 15, d6: 12, d12: 8, min21: 5000,
   b: {1:17, 2:15, 3:14, 4:11, 5:10, 6:9, 7:8},
   entMin: 25, kDesc: 15, kEnt: 25, kMaxParc: 4,
   // DRE — os custos reais ficam na planilha (aba "Config Orçamento") e só chegam aqui depois do PIN da Gestão
@@ -942,6 +948,20 @@ function calcCartao(){
   var fr=freteV('c');   // frete sem desconto, somado e dividido nas parcelas
   var v12=total*(1-d12)+fr,v6=total*(1-d6)+fr,vV=total*(1-dv)+fr;
   var p12=Math.ceil(v12/12),p6=Math.ceil(v6/6),p21=Math.floor((total+fr)/21);
+  // ENTRADA no PIX/dinheiro: a parte paga na entrada ganha o desconto do à vista; o restante segue a condição do cartão
+  // o vendedor digita quanto do VALOR DE TABELA a entrada abate (ex.: R$ 2.000 de R$ 10.000);
+  // o cliente paga essa parte com o desconto do à vista, e só o restante (R$ 8.000) vai para o cartão
+  var eIn=document.getElementById('c_entrada'),Eb=Math.max(0,parseFloat(eIn&&eIn.value)||0),eMsg=document.getElementById('c_ent_msg'),E=0;
+  eMsg.textContent='';
+  if(Eb>0&&total>0&&Eb>=total){eMsg.textContent='a entrada cobre tudo — use À vista';Eb=0;}
+  if(Eb>0&&total>0){
+    E=Math.ceil(Eb*(1-(CFG.dEntrada!=null?CFG.dEntrada:CFG.dVista)/100));   // entrada tem desconto próprio (padrão 15%), menor que o à vista puro
+    var rem=total-Eb;                  // saldo do produto, parcelado com o desconto de cada condição
+    v6=rem*(1-d6)+fr;v12=rem*(1-d12)+fr;
+    p6=Math.ceil(v6/6);p12=Math.ceil(v12/12);p21=Math.floor((rem+fr)/21);
+    eMsg.style.color='var(--text2)';eMsg.textContent='cliente paga '+R$(E)+' de entrada · restante de '+R$(rem)+' no cartão';
+  } else eMsg.style.color='';
+  var tE=function(p,n){return E+p*n;};   // total pago = entrada + parcelas
   var s21=total>=CFG.min21;
   var sh={v:C_SHOW.v,'6':C_SHOW['6'],'12':C_SHOW['12'],'21':C_SHOW['21']&&s21};
   updateCondChips(s21);
@@ -952,9 +972,10 @@ function calcCartao(){
   // KPIs (só as condições ligadas)
   var k=[];
   if(sh.v)k.push('<div class="kpi"><div class="kpi-label">À Vista / PIX</div><div class="kpi-val c-green">'+R$(Math.ceil(vV))+'</div><div class="kpi-sub">pagamento à vista</div></div>');
-  if(sh['6'])k.push('<div class="kpi"><div class="kpi-label">6x Cartão</div><div class="kpi-val c-blue">'+R$(p6)+mes+'</div><div class="kpi-sub">Total: '+R$(p6*6)+'</div></div>');
-  if(sh['12'])k.push('<div class="kpi"><div class="kpi-label">12x Cartão</div><div class="kpi-val c-amber">'+R$(p12)+mes+'</div><div class="kpi-sub">Total: '+R$(p12*12)+'</div></div>');
-  if(sh['21'])k.push('<div class="kpi"><div class="kpi-label">21x Cartão</div><div class="kpi-val c-purple">'+R$(p21)+mes+'</div><div class="kpi-sub">Total: '+R$(p21*21)+'</div></div>');
+  var eL=E?'Entrada + ':'',eS=E?'Entrada '+R$(E)+' · ':'';
+  if(sh['6'])k.push('<div class="kpi"><div class="kpi-label">'+eL+'6x Cartão</div><div class="kpi-val c-blue">'+R$(p6)+mes+'</div><div class="kpi-sub">'+eS+'Total: '+R$(tE(p6,6))+'</div></div>');
+  if(sh['12'])k.push('<div class="kpi"><div class="kpi-label">'+eL+'12x Cartão</div><div class="kpi-val c-amber">'+R$(p12)+mes+'</div><div class="kpi-sub">'+eS+'Total: '+R$(tE(p12,12))+'</div></div>');
+  if(sh['21'])k.push('<div class="kpi"><div class="kpi-label">'+eL+'21x Cartão</div><div class="kpi-val c-purple">'+R$(p21)+mes+'</div><div class="kpi-sub">'+eS+'Total: '+R$(tE(p21,21))+'</div></div>');
   var kEl=document.getElementById('c_kpis');
   kEl.innerHTML=k.join('');
   kEl.setAttribute('data-n',k.length);
@@ -967,9 +988,11 @@ function calcCartao(){
   if(multi)pl+='\n\n📦 *Total: '+R$(total)+'*';
   var cond=[];
   if(sh.v)cond.push('* *À vista:* '+R$(Math.ceil(vV)));
-  if(sh['6'])cond.push('* *6x:* '+R$(p6)+'  (Total: '+R$(p6*6)+')');
-  if(sh['12'])cond.push('* *12x:* '+R$(p12)+'  (Total: '+R$(p12*12)+')');
-  if(sh['21'])cond.push('* *21x:* '+R$(p21)+'  (Total: '+R$(p21*21)+')');
+  var eP=E?'entrada '+R$(E)+' + ':'';
+  if(sh['6'])cond.push('* *'+(E?'Entrada + ':'')+'6x:* '+eP+R$(p6)+'  (Total: '+R$(tE(p6,6))+')');
+  if(sh['12'])cond.push('* *'+(E?'Entrada + ':'')+'12x:* '+eP+R$(p12)+'  (Total: '+R$(tE(p12,12))+')');
+  if(sh['21'])cond.push('* *'+(E?'Entrada + ':'')+'21x:* '+eP+R$(p21)+'  (Total: '+R$(tE(p21,21))+')');
+  if(E&&(sh['6']||sh['12']||sh['21']))cond.push('\n💵 _Entrada de '+R$(E)+' no PIX ou dinheiro; o restante no cartão._');
 
   var msg='*Segue o orçamento:*';
   if(vend){msg+='\n_Vendedor: '+vend;if(cel)msg+=' | '+cel;msg+='_';}
@@ -1002,16 +1025,25 @@ function calcCartao(){
       +(sh['6']?cel6(p6,6):'')+(sh['12']?cel6(p12,12):'')+(sh['21']?cel6(p21,21):'')
       +'</tr>';
   }
-  th+='</tbody>';document.getElementById('c_resumo').innerHTML=th;
+  th+='</tbody>';
+  if(E){ // com entrada, os valores por produto não fazem sentido: mostra só produtos, frete e entrada (as condições saem nos cartões)
+    th='<thead><tr><th style="text-align:left">Produto</th><th>Qtd</th><th>Subtotal</th></tr></thead><tbody>';
+    prods.c.forEach(function(pp,i){var q=pp.qtd||1,sb=pp.valor*q;if(sb>0)th+='<tr><td style="text-align:left">'+(pp.nome||'Produto '+(i+1))+'</td><td>'+q+'</td><td>'+R$(sb)+'</td></tr>';});
+    if(fr)th+='<tr><td style="text-align:left">🚚 Frete</td><td></td><td>'+R$(fr)+'</td></tr>';
+    th+='<tr style="font-weight:700"><td style="text-align:left">💵 Entrada (PIX/dinheiro)</td><td></td><td>'+R$(E)+'</td></tr></tbody>';
+  }
+  document.getElementById('c_resumo').innerHTML=th;
   // imagem para o WhatsApp
   var rowsC=[];
   if(sh.v)rowsC.push(['À vista / PIX',pct(CFG.dVista),'À vista',R$(Math.ceil(vV))]);
-  if(sh['6'])rowsC.push(['6x no cartão',pct(CFG.d6),'6x de '+R$(p6),R$(p6*6)]);
-  if(sh['12'])rowsC.push(['12x no cartão',pct(CFG.d12),'12x de '+R$(p12),R$(p12*12)]);
-  if(sh['21'])rowsC.push(['21x no cartão','—','21x de '+R$(p21),R$(p21*21)]);
+  var eR=E?R$(E)+' + ':'';
+  if(sh['6'])rowsC.push([(E?'Entrada + ':'')+'6x cartão',pct(CFG.d6),eR+'6x de '+R$(p6),R$(tE(p6,6))]);
+  if(sh['12'])rowsC.push([(E?'Entrada + ':'')+'12x cartão',pct(CFG.d12),eR+'12x de '+R$(p12),R$(tE(p12,12))]);
+  if(sh['21'])rowsC.push([(E?'Entrada + ':'')+'21x cartão','—',eR+'21x de '+R$(p21),R$(tE(p21,21))]);
   renderImg('c',function(){if(!(total>0)||!rowsC.length)return null;var pad=30,W=760;
     return desenharOrc({t:'c',titulo:rowsC.length===1?'Condição de pagamento':'Condições de pagamento',total:total,fr:fr,
       notaFrete:'Formas de pagamento (frete já somado em todas):',destaque:true,
+      rodape:E&&(sh['6']||sh['12']||sh['21'])?'💵 Entrada de '+R$(E)+' no PIX ou dinheiro; o restante no cartão.':'',
       heads:['Condição','Parcelas','Total'],al:['left','center','right'],cols:[pad+12,pad+400,W-pad-12],rows:rowsC.map(function(r){return [r[0],r[2],r[3]];})});});
 }
 
@@ -1052,7 +1084,7 @@ function desenharOrc(cfg){
   var extraIt=linhasIt.reduce(function(a,l){return a+(l.length-1)*19;},0);
   var fotos=(imgs[t]||[]).map(function(s_){return FOTO_OBJ[s_];}).filter(Boolean).slice(0,3);
   var fotoH=fotos.length===1?300:fotos.length?220:0;
-  var H=150+(cli?22:0)+(fotoH?fotoH+20:0)+itens.length*28+extraIt+100+(frI?88:0)+rows.length*46+(ex.length?34:10)+72;
+  var H=150+(cli?22:0)+(fotoH?fotoH+20:0)+itens.length*28+extraIt+100+(frI?88:0)+rows.length*46+(cfg.rodape?28:0)+(ex.length?34:10)+72;
   var cv=document.createElement('canvas');cv.width=W*S;cv.height=H*S;var g=cv.getContext('2d');g.scale(S,S);
   function txt(s_,x,y,size,cor,peso,al){g.font=(peso||'normal')+' '+size+'px '+F;g.fillStyle=cor||'#0f172a';g.textAlign=al||'left';g.textBaseline='alphabetic';g.fillText(s_,x,y);}
   function fit(s_,max,size,peso){g.font=(peso||'normal')+' '+size+'px '+F;if(g.measureText(s_).width<=max)return s_;while(s_.length>3&&g.measureText(s_+'…').width>max)s_=s_.slice(0,-1);return s_+'…';}
@@ -1097,6 +1129,7 @@ function desenharOrc(cfg){
       txt(c,cols[m],y+29,(m===0||m===r.length-1)?15:14,cor,peso,al[m]);});
     y+=46;});
   g.strokeStyle='#dde4f0';g.lineWidth=1;g.strokeRect(pad+.5,y0+.5,tw-1,y-y0-1);
+  if(cfg.rodape){y+=28;txt(cfg.rodape,pad,y,13,'#1f2937','bold');}
   if(ex.length){y+=34;txt(ex.join('   ·   '),pad,y,14,'#15803d','bold');}else y+=10;
   y+=20;g.fillStyle='#dde4f0';g.fillRect(pad,y,W-2*pad,1);y+=26;
   txt(vend?'Vendedor: '+vend+(cel?' · '+cel:''):'Fale com a gente: (24) 3323-5328',pad,y,13,'#1f2937','bold');
@@ -1310,6 +1343,7 @@ function checkAdminPin(el){
 }
 function loadAdminFields(){
   document.getElementById('cfg_dVista').value=CFG.dVista;
+  document.getElementById('cfg_dEntrada').value=CFG.dEntrada;
   document.getElementById('cfg_d6').value=CFG.d6;
   document.getElementById('cfg_d12').value=CFG.d12;
   document.getElementById('cfg_min21').value=CFG.min21;
@@ -1326,7 +1360,7 @@ function loadAdminFields(){
 }
 function saveAdminConfig(){
   function v(id){var x=document.getElementById(id).value;if(String(x).trim()==='')return null;var n=parseFloat(String(x).replace(',','.'));return isNaN(n)?null:n;}
-  var map={dVista:'cfg_dVista',d6:'cfg_d6',d12:'cfg_d12',min21:'cfg_min21',entMin:'cfg_entMin',cmv:'cfg_cmv',comissao:'cfg_comissao',taxa6:'cfg_taxa6',taxa12:'cfg_taxa12',taxa21:'cfg_taxa21',taxaBol:'cfg_taxaBol',frete:'cfg_frete',outrosCustos:'cfg_outrosCustos'};
+  var map={dVista:'cfg_dVista',dEntrada:'cfg_dEntrada',d6:'cfg_d6',d12:'cfg_d12',min21:'cfg_min21',entMin:'cfg_entMin',cmv:'cfg_cmv',comissao:'cfg_comissao',taxa6:'cfg_taxa6',taxa12:'cfg_taxa12',taxa21:'cfg_taxa21',taxaBol:'cfg_taxaBol',frete:'cfg_frete',outrosCustos:'cfg_outrosCustos'};
   for(var i=1;i<=7;i++)map['b'+i]='cfg_b'+i;
   var cfg={},vazio=[];Object.keys(map).forEach(function(k){var n=v(map[k]);if(n===null)vazio.push(k);else cfg[k]=n;});
   if(vazio.length){alert('Preencha todos os campos (use 0 para "sem desconto").');return;}
@@ -1334,7 +1368,7 @@ function saveAdminConfig(){
   fetch(CFG_URL,{method:'POST',body:JSON.stringify({action:'salvarCfgOrc',pin:ADMIN_PIN_OK,cfg:cfg})}).then(function(r){return r.json();}).then(function(r){
     btn.disabled=false;btn.textContent='💾 Salvar Configurações';
     if(!r.ok){alert('Não salvou: '+(r.error||'erro'));return;}
-    applyCfg(r.cfg);var pub={};Object.keys(r.cfg).forEach(function(k){if(/^(dVista|d6|d12|min21|entMin|b\d)$/.test(k))pub[k]=r.cfg[k];});
+    applyCfg(r.cfg);var pub={};Object.keys(r.cfg).forEach(function(k){if(/^(dVista|dEntrada|d6|d12|min21|entMin|b\d)$/.test(k))pub[k]=r.cfg[k];});
     try{localStorage.setItem('pc_orc_cfg',JSON.stringify(pub));}catch(e){}
     recalcTudo();loadAdminFields();
     s.textContent='✅ Salvo na planilha — vale para todos os vendedores ('+r.alterados+' campo'+(r.alterados===1?'':'s')+' alterado'+(r.alterados===1?'':'s')+')';
