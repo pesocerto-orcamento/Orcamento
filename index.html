@@ -955,11 +955,12 @@ function calcCartao(){
   eMsg.textContent='';
   if(Eb>0&&total>0&&Eb>=total){eMsg.textContent='a entrada cobre tudo — use À vista';Eb=0;}
   if(Eb>0&&total>0){
-    E=Math.ceil(Eb*(1-(CFG.dEntrada!=null?CFG.dEntrada:CFG.dVista)/100));   // entrada tem desconto próprio (padrão 15%), menor que o à vista puro
-    var rem=total-Eb;                  // saldo do produto, parcelado com o desconto de cada condição
-    v6=rem*(1-d6)+fr;v12=rem*(1-d12)+fr;
-    p6=Math.ceil(v6/6);p12=Math.ceil(v12/12);p21=Math.floor((rem+fr)/21);
-    eMsg.style.color='var(--text2)';eMsg.textContent='cliente paga '+R$(E)+' de entrada · restante de '+R$(rem)+' no cartão';
+    E=Eb;                                                      // o cliente paga exatamente a entrada digitada
+    var bonus=Eb*(CFG.dEntrada!=null?CFG.dEntrada:15)/100;    // 15% da entrada vira desconto no restante
+    var rem=total-Eb;                                          // restante do produto, com o desconto de cada condição
+    v6=Math.max(0,rem*(1-d6)-bonus)+fr;v12=Math.max(0,rem*(1-d12)-bonus)+fr;
+    p6=Math.ceil(v6/6);p12=Math.ceil(v12/12);p21=Math.floor((Math.max(0,rem-bonus)+fr)/21);
+    eMsg.style.color='var(--text2)';eMsg.textContent='entrada de '+R$(E)+' · desconto de '+R$(bonus)+' abatido do restante ('+R$(rem)+') no cartão';
   } else eMsg.style.color='';
   var tE=function(p,n){return E+p*n;};   // total pago = entrada + parcelas
   var s21=total>=CFG.min21;
